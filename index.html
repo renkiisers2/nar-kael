@@ -49,6 +49,18 @@
             z-index: 10;
             border-bottom: 1px solid rgba(255,255,255,0.05);
             backdrop-filter: blur(10px);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .logo {
@@ -57,15 +69,25 @@
             font-weight: 700;
             letter-spacing: 6px;
             cursor: pointer;
+            transition: 0.3s;
         }
 
-        .logo:hover { color: #aaa; transition: 0.3s; }
+        .logo:hover { 
+            color: #aaa;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
 
         /* Главное меню */
         nav {
             display: flex;
             gap: 40px;
             align-items: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .nav-link {
@@ -75,14 +97,44 @@
             letter-spacing: 2px;
             color: #666;
             transition: 0.3s;
+            position: relative;
         }
 
-        .nav-link:hover, .nav-link.active { color: #fff; }
+        .nav-link:hover, .nav-link.active { 
+            color: #fff;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #fff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
 
         .nav-right {
             display: flex;
             align-items: center;
             gap: 30px;
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .login-btn {
@@ -92,9 +144,12 @@
             font-weight: 700;
             letter-spacing: 2px;
             transition: 0.3s;
+            position: relative;
         }
 
-        .login-btn:hover { color: #fff; }
+        .login-btn:hover { 
+            color: #fff;
+        }
 
         .reg-btn, .logout-btn {
             background: #fff;
@@ -120,16 +175,24 @@
         .user-info {
             color: #aaa;
             font-size: 0.85rem;
+            animation: fadeIn 0.6s ease-out;
         }
 
         /* Основной контент */
         .content {
             flex: 1;
             padding: 40px 80px;
-            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: all 0.5s ease-out;
         }
 
-        .content.active { display: block; }
+        .content.active { 
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
 
         .main-card {
             background: rgba(255, 255, 255, 0.02);
@@ -140,6 +203,18 @@
             text-align: center;
             max-width: 900px;
             margin: 0 auto;
+            animation: cardAppear 0.8s ease-out;
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         h1 {
@@ -150,6 +225,12 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
+            animation: textGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% { text-shadow: 0 0 0px rgba(255,255,255,0); }
+            50% { text-shadow: 0 0 20px rgba(255,255,255,0.2); }
         }
 
         h2 {
@@ -157,6 +238,54 @@
             font-size: 3rem;
             margin-bottom: 30px;
             letter-spacing: 3px;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Кнопка скачивания */
+        .download-btn {
+            background: transparent;
+            border: 2px solid #333;
+            color: #fff;
+            padding: 20px 50px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .download-btn:hover::before {
+            left: 100%;
+        }
+
+        .download-btn:hover {
+            border-color: #fff;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
         }
 
         /* Модальные окна */
@@ -169,6 +298,12 @@
             backdrop-filter: blur(15px);
             justify-content: center;
             align-items: center;
+            animation: fadeInBg 0.3s ease-out;
+        }
+
+        @keyframes fadeInBg {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal.active { display: flex; }
@@ -181,6 +316,18 @@
             width: 100%;
             max-width: 400px;
             text-align: center;
+            animation: modalSlide 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         .modal-content h2 {
@@ -195,17 +342,18 @@
             padding: 15px;
             margin-bottom: 15px;
             background: #111;
-            border: 1px solid #222;
+            border: 2px solid #222;
             color: #fff;
             border-radius: 12px;
             outline: none;
             font-family: 'Inter', sans-serif;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
 
         input:focus { 
             border-color: #fff;
-            box-shadow: 0 0 10px rgba(255,255,255,0.1);
+            box-shadow: 0 0 15px rgba(255,255,255,0.1);
+            transform: translateY(-2px);
         }
 
         input::placeholder { color: #555; }
@@ -219,11 +367,32 @@
             border-radius: 12px;
             font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .auth-submit:hover { background: #ccc; }
+        .auth-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.2);
+            transition: left 0.3s ease;
+        }
+
+        .auth-submit:hover::before {
+            left: 100%;
+        }
+
+        .auth-submit:hover {
+            background: #ccc;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+        }
 
         .auth-submit:disabled {
             background: #555;
@@ -255,13 +424,25 @@
             border-radius: 20px;
             padding: 30px;
             text-align: center;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             cursor: pointer;
+            animation: cardFloat 0.6s ease-out;
+        }
+
+        @keyframes cardFloat {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .card:hover {
             border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-10px);
+            transform: translateY(-15px);
             box-shadow: 0 20px 40px rgba(255,255,255,0.05);
         }
 
@@ -285,23 +466,28 @@
             border-radius: 10px;
             cursor: pointer;
             font-weight: 700;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             width: 100%;
         }
 
-        .card-btn:hover { background: #ccc; }
+        .card-btn:hover {
+            background: #ccc;
+            transform: scale(1.05);
+        }
 
         /* Таблица истории */
         .history-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 30px;
+            animation: fadeIn 0.6s ease-out;
         }
 
         .history-table th, .history-table td {
             padding: 15px;
             text-align: left;
             border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
         }
 
         .history-table th {
@@ -319,6 +505,13 @@
             font-size: 0.9rem;
             margin-bottom: 15px;
             display: none;
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
         .success-msg {
@@ -326,6 +519,18 @@
             font-size: 0.9rem;
             margin-bottom: 15px;
             display: none;
+            animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .error-msg.show, .success-msg.show {
@@ -372,12 +577,12 @@
 
     <header>
         <div class="logo" onclick="showPage('home')">NAR-KAEL</div>
-        <nav id="mainNav" style="display: none;">
+        <nav>
             <div class="nav-link active" onclick="showPage('home')">HOME</div>
             <div class="nav-link" onclick="showPage('library')">LIBRARY</div>
             <div class="nav-link" onclick="showPage('marketplace')">MARKETPLACE</div>
-            <div class="nav-link" onclick="showPage('profile')">PROFILE</div>
-            <div class="nav-link" onclick="showPage('settings')">SETTINGS</div>
+            <div class="nav-link" id="profileLink" onclick="showPage('profile')" style="display: none;">PROFILE</div>
+            <div class="nav-link" id="settingsLink" onclick="showPage('settings')" style="display: none;">SETTINGS</div>
         </nav>
         <div class="nav-right" id="authButtons">
             <div class="login-btn" onclick="openModal('loginModal')">ВХОД</div>
@@ -385,7 +590,7 @@
         </div>
         <div class="nav-right" id="userPanel" style="display: none;">
             <div class="user-info" id="userEmail"></div>
-            <button class="logout-btn" onclick="logout()">ВЫХОД</button>
+            <button class="logout-btn" onclick="logoutUser()">ВЫХОД</button>
         </div>
     </header>
 
@@ -395,7 +600,7 @@
             <h1>EXPEDITION</h1>
             <p style="color: #666; margin-bottom: 40px; font-size: 1.1rem;">Тёмное фэнтези выживание. Исследуй, сражайся, властвуй.</p>
             <p style="color: #555; margin-bottom: 30px;">Погрузись в мир NAR-KAEL — средневекового королевства, охваченного мраком и магией. Выживай в опасных землях, сражайся с древними врагами и раскрывай тайны запретной магии.</p>
-            <button style="background: transparent; border: 1px solid #333; color: #fff; padding: 20px 50px; border-radius: 15px; cursor: pointer; font-weight: 700; transition: 0.3s;">СКАЧАТЬ ЛАУНЧЕР</button>
+            <button class="download-btn">СКАЧАТЬ ЛАУНЧЕР</button>
         </div>
     </div>
 
@@ -403,7 +608,7 @@
     <div id="library" class="content">
         <h2>МОЯ БИБЛИОТЕКА</h2>
         <p style="color: #666; margin-bottom: 40px;">Твои установленные игры и проекты</p>
-        <div id="libraryContent"></div>
+        <div id="libraryContent" class="grid"></div>
     </div>
 
     <!-- MARKETPLACE PAGE -->
@@ -418,11 +623,11 @@
         <h2>МОЙ ПРОФИЛЬ</h2>
         <div class="main-card">
             <div style="text-align: left;">
-                <p><strong>Email:</strong> <span id="profileEmail"></span></p>
-                <p><strong>Дата регистрации:</strong> <span id="profileDate"></span></p>
-                <p><strong>Всего покупок:</strong> <span id="profilePurchases">0</span></p>
+                <p style="margin-bottom: 15px;"><strong>Email:</strong> <span id="profileEmail"></span></p>
+                <p style="margin-bottom: 15px;"><strong>Дата регистрации:</strong> <span id="profileDate"></span></p>
+                <p style="margin-bottom: 15px;"><strong>Статус:</strong> <span style="color: #51cf66;">● Онлайн</span></p>
             </div>
-            <h3 style="margin-top: 40px; font-size: 1.5rem;">История покупок:</h3>
+            <h3 style="margin-top: 40px; font-size: 1.5rem; margin-bottom: 20px;">История покупок:</h3>
             <table class="history-table">
                 <thead>
                     <tr>
@@ -529,17 +734,21 @@
         // Проверка статуса авторизации
         onAuthStateChanged(auth, (user) => {
             if (user) {
+                // Пользователь залогинен
                 document.getElementById('authButtons').style.display = 'none';
                 document.getElementById('userPanel').style.display = 'flex';
-                document.getElementById('mainNav').style.display = 'flex';
+                document.getElementById('profileLink').style.display = 'block';
+                document.getElementById('settingsLink').style.display = 'block';
                 document.getElementById('userEmail').textContent = user.email;
                 document.getElementById('settingsEmail').value = user.email;
                 document.getElementById('profileEmail').textContent = user.email;
                 document.getElementById('profileDate').textContent = new Date(user.metadata.creationTime).toLocaleDateString('ru-RU');
             } else {
+                // Пользователь не залогинен
                 document.getElementById('authButtons').style.display = 'flex';
                 document.getElementById('userPanel').style.display = 'none';
-                document.getElementById('mainNav').style.display = 'none';
+                document.getElementById('profileLink').style.display = 'none';
+                document.getElementById('settingsLink').style.display = 'none';
                 showPage('home');
             }
         });
@@ -651,13 +860,13 @@
             }
         };
 
-        // ВЫХОД
-        window.logout = async () => {
+        // ВЫХОД - ИСПРАВЛЕНО
+        window.logoutUser = async () => {
             try {
                 await signOut(auth);
-                closeModal('loginModal');
+                console.log('Успешно вышли');
             } catch (e) {
-                alert('Ошибка выхода: ' + e.message);
+                console.error('Ошибка выхода:', e);
             }
         };
 
@@ -709,19 +918,23 @@
             element.classList.add('show');
         }
 
-        window.showMarketplace = () => {
+        // Маркетплейс
+        window.loadMarketplace = () => {
             const games = [
                 { name: 'NAR-KAEL: EXPEDITION', price: '499₽', desc: 'Главная игра' },
                 { name: 'DARK SOULS PACK', price: '399₽', desc: 'Набор скинов' },
                 { name: 'MAGIC SPELLS', price: '199₽', desc: 'DLC с заклинаниями' },
                 { name: 'WEAPONS COLLECTION', price: '299₽', desc: 'Оружейный арсенал' },
+                { name: 'CURSED ARMOR', price: '249₽', desc: 'Легендарная броня' },
+                { name: 'ANCIENT ARTIFACTS', price: '349₽', desc: 'Предметы силы' },
             ];
 
             const marketplace = document.getElementById('marketplaceContent');
             marketplace.innerHTML = '';
-            games.forEach(game => {
+            games.forEach((game, index) => {
                 const card = document.createElement('div');
                 card.className = 'card';
+                card.style.animationDelay = (index * 0.1) + 's';
                 card.innerHTML = `
                     <div class="card-title">${game.name}</div>
                     <p style="color: #666; font-size: 0.9rem;">${game.desc}</p>
@@ -730,6 +943,12 @@
                 `;
                 marketplace.appendChild(card);
             });
+        };
+
+        // Библиотека
+        window.loadLibrary = () => {
+            const library = document.getElementById('libraryContent');
+            library.innerHTML = '<p style="color: #666; text-align: center; padding: 40px;">Пока нет установленных игр</p>';
         };
 
         window.buyGame = (name) => {
@@ -744,8 +963,10 @@
 
         function closeModal(id) {
             document.getElementById(id).classList.remove('active');
-            document.getElementById(id + 'Error').classList.remove('show');
-            document.getElementById(id + 'Success').classList.remove('show');
+            const errorEl = document.getElementById(id + 'Error');
+            const successEl = document.getElementById(id + 'Success');
+            if (errorEl) errorEl.classList.remove('show');
+            if (successEl) successEl.classList.remove('show');
         }
 
         function showPage(page) {
@@ -753,12 +974,12 @@
             document.getElementById(page).classList.add('active');
 
             document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
-            if (event && event.target.classList.contains('nav-link')) {
-                event.target.classList.add('active');
-            }
+            event.target?.classList.add('active');
 
             if (page === 'marketplace') {
-                window.showMarketplace();
+                window.loadMarketplace();
+            } else if (page === 'library') {
+                window.loadLibrary();
             }
         }
 
