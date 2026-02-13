@@ -3,19 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAR-KAEL | THE VOID</title>
+    <title>NAR-KAEL | THE VOID CALLS</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --accent: #ffffff;
-            --bg: #000000;
-            --glass: rgba(255, 255, 255, 0.05);
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg);
+            background: #000;
             color: white;
             font-family: 'Inter', sans-serif;
             height: 100vh;
@@ -24,157 +18,171 @@
             flex-direction: column;
         }
 
-        /* Анимированный фон */
-        .bg-gradient {
+        /* Анимированный живой фон */
+        .bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #111 0%, #000 100%);
-            z-index: -2;
+            background: radial-gradient(circle at 50% 50%, #0a0a0a 0%, #000 100%);
+            z-index: -1;
         }
 
-        .glow {
+        .glow-sphere {
             position: absolute;
             top: 50%; left: 50%;
-            width: 40vw; height: 40vw;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            width: 50vw; height: 50vw;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
             transform: translate(-50%, -50%);
-            filter: blur(60px);
-            z-index: -1;
-            animation: pulse 8s infinite alternate;
+            filter: blur(100px);
+            animation: pulse 10s infinite alternate ease-in-out;
         }
 
         @keyframes pulse {
-            from { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-            to { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+            from { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            to { transform: translate(-50%, -50%) scale(1.3); opacity: 0.7; }
         }
 
-        /* Навигация */
+        /* Навигация (Правый верхний угол) */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 40px 60px;
+            padding: 40px 80px;
+            z-index: 10;
         }
 
         .logo {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 1.8rem;
             font-weight: 700;
-            letter-spacing: 4px;
-            text-transform: uppercase;
+            letter-spacing: 6px;
         }
 
-        .auth-buttons {
+        .nav-right {
             display: flex;
-            gap: 20px;
             align-items: center;
+            gap: 30px;
         }
 
-        .login-link {
-            color: #888;
+        .login-btn {
+            color: #666;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
             transition: 0.3s;
         }
 
-        .login-link:hover { color: white; }
+        .login-btn:hover { color: #fff; }
 
-        .btn-reg {
-            background: white;
-            color: black;
-            padding: 12px 30px;
-            border-radius: 50px; /* Закругленные края */
+        .reg-btn {
+            background: #fff;
+            color: #000;
+            padding: 14px 35px;
+            border-radius: 50px; /* Круглые края */
             text-decoration: none;
+            font-size: 0.8rem;
             font-weight: 700;
-            font-size: 0.85rem;
+            letter-spacing: 1px;
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .btn-reg:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+        .reg-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.2);
         }
 
         /* Центр страницы */
-        .hero {
+        .content {
             flex: 1;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            padding-bottom: 10vh;
         }
 
-        .hero-card {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 60px;
-            border-radius: 40px; /* Закругленные края карточки */
-            max-width: 800px;
+        .main-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 80px;
+            border-radius: 40px; /* Сильное закругление */
+            text-align: center;
+            max-width: 900px;
         }
 
         h1 {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 5rem;
+            font-size: 6rem;
             font-weight: 700;
-            letter-spacing: -2px;
-            margin-bottom: 20px;
-            line-height: 0.9;
+            letter-spacing: -3px;
+            line-height: 0.8;
+            margin-bottom: 25px;
+            background: linear-gradient(to bottom, #fff 40%, #444 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         p {
-            color: #aaa;
+            color: #777;
             font-size: 1.1rem;
-            margin-bottom: 40px;
-            max-width: 500px;
+            max-width: 550px;
+            margin: 0 auto 40px;
             line-height: 1.6;
         }
 
-        .download-btn {
+        .download-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .btn-dl {
             background: transparent;
-            color: white;
-            border: 1px solid white;
-            padding: 20px 50px;
-            border-radius: 15px;
-            font-size: 1rem;
+            color: #fff;
+            border: 1px solid #333;
+            padding: 20px 60px;
+            border-radius: 15px; /* Умеренное закругление */
+            font-size: 0.9rem;
             font-weight: 700;
+            letter-spacing: 2px;
             cursor: pointer;
             transition: 0.4s;
         }
 
-        .download-btn:hover {
-            background: white;
-            color: black;
+        .btn-dl:hover {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
         }
 
-        .status {
-            margin-top: 30px;
-            font-size: 0.7rem;
-            color: #444;
-            letter-spacing: 3px;
+        .status-tag {
+            font-size: 0.6rem;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 4px;
         }
     </style>
 </head>
 <body>
-    <div class="bg-gradient"></div>
-    <div class="glow"></div>
+    <div class="bg"></div>
+    <div class="glow-sphere"></div>
 
     <header>
         <div class="logo">NAR-KAEL</div>
-        <div class="auth-buttons">
-            <a href="#" class="login-link">ВХОД</a>
-            <a href="#" class="btn-reg">РЕГИСТРАЦИЯ</a>
+        <div class="nav-right">
+            <a href="#" class="login-btn">ВХОД</a>
+            <a href="#" class="reg-btn">РЕГИСТРАЦИЯ</a>
         </div>
     </header>
 
-    <main class="hero">
-        <div class="hero-card">
+    <main class="content">
+        <div class="main-card">
             <h1>EXPEDITION</h1>
-            <p>Испытай свои силы в самом мрачном мире этого года. Никаких донатов, только скилл.</p>
-            <button class="download-btn">СКАЧАТЬ ЛАУНЧЕР</button>
-            <div class="status">SERVER: ONLINE | V. 0.1.2</div>
+            <p>Исследуй пустоту в новом Dark Fantasy выживании. Твоя экспедиция начинается в самом сердце бездны.</p>
+            <div class="download-action">
+                <button class="btn-dl">СКАЧАТЬ ЛАУНЧЕР</button>
+                <div class="status-tag">Status: Online | Phase 1.0</div>
+            </div>
         </div>
     </main>
 </body>
