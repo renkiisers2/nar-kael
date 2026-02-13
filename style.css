@@ -1,36 +1,106 @@
 body {
-    background-color: #000000; /* Тот самый черный */
-    color: white;
-    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #050505; /* Глубокий черный */
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+}
+
+/* Эффект виньетки на фоне */
+.overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle, transparent 20%, black 150%);
+    z-index: -1;
+}
+
+header {
     display: flex;
+    justify-content: space-between;
+    padding: 30px 10%;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 4px;
+    border-left: 3px solid white;
+    padding-left: 15px;
+}
+
+nav a {
+    color: #888;
+    text-decoration: none;
+    margin-left: 30px;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+nav a:hover { color: white; }
+
+.hero {
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
+    text-align: center;
 }
 
-.container { text-align: center; }
-
-h1 { font-size: 3rem; letter-spacing: 5px; }
-.highlight { color: #888; } /* Серый акцент */
-
-.main-box {
-    margin: 40px 0;
-    padding: 50px;
-    border: 1px solid #333; /* Тонкая серая рамка */
+h1 {
+    font-size: 5rem;
+    letter-spacing: 15px;
+    margin-bottom: 10px;
+    color: #444;
 }
 
-.download-btn {
+.white { color: white; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+
+p { color: #666; font-size: 1.2rem; letter-spacing: 2px; }
+
+.actions { margin-top: 40px; }
+
+.btn-main {
     background: white;
     color: black;
     border: none;
-    padding: 15px 40px;
+    padding: 15px 45px;
     font-weight: bold;
+    cursor: pointer;
+    margin-right: 20px;
+    transition: 0.3s;
+}
+
+.btn-main:hover { background: #bbb; transform: scale(1.05); }
+
+.btn-sub {
+    background: transparent;
+    color: white;
+    border: 1px solid #333;
+    padding: 15px 45px;
     cursor: pointer;
     transition: 0.3s;
 }
 
-.download-btn:hover { background: #ccc; }
+.btn-sub:hover { border-color: white; }
 
-.stats { color: #555; font-size: 0.8rem; }
- 
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #1a1a1a;
+    background: #0a0a0a;
+}
+
+.status-bar {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    gap: 50px;
+    font-size: 0.8rem;
+    color: #444;
+}
+
+.online { color: #00ff00; font-weight: bold; }
