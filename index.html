@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +13,7 @@
             color: white;
             font-family: 'Inter', sans-serif;
             height: 100%;
+            width: 100%;
             overflow-x: hidden;
         }
 
@@ -54,6 +55,7 @@
             border-bottom: 1px solid rgba(255,255,255,0.05);
             backdrop-filter: blur(10px);
             animation: slideDown 0.6s ease-out;
+            flex-shrink: 0;
         }
 
         @keyframes slideDown {
@@ -191,11 +193,12 @@
         .pages-wrapper {
             flex: 1;
             overflow-y: auto;
+            overflow-x: hidden;
             padding: 0;
         }
 
         .content {
-            min-height: 100vh;
+            min-height: auto;
             padding: 40px 80px;
             opacity: 0;
             transform: translateY(20px);
@@ -316,6 +319,7 @@
             justify-content: center;
             align-items: center;
             animation: fadeInBg 0.3s ease-out;
+            overflow-y: auto;
         }
 
         @keyframes fadeInBg {
@@ -334,6 +338,7 @@
             max-width: 400px;
             text-align: center;
             animation: modalSlide 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            margin: auto;
         }
 
         @keyframes modalSlide {
@@ -365,6 +370,7 @@
             outline: none;
             font-family: 'Inter', sans-serif;
             transition: all 0.3s ease;
+            box-sizing: border-box;
         }
 
         input:focus { 
@@ -467,29 +473,6 @@
             font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 10px;
-        }
-
-        .card-price {
-            font-size: 1.8rem;
-            color: #fff;
-            margin: 20px 0;
-        }
-
-        .card-btn {
-            background: #fff;
-            color: #000;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .card-btn:hover {
-            background: #ccc;
-            transform: scale(1.05);
         }
 
         /* Таблица истории */
@@ -595,18 +578,18 @@
     <header>
         <div class="logo" onclick="showPage('home')">NAR-KAEL</div>
         <nav>
-            <div class="nav-link active" data-page="home" onclick="showPage('home')">HOME</div>
-            <div class="nav-link" data-page="library" onclick="showPage('library')">LIBRARY</div>
-            <div class="nav-link" data-page="profile" id="profileLink" onclick="showPage('profile')" style="display: none;">PROFILE</div>
-            <div class="nav-link" data-page="settings" id="settingsLink" onclick="showPage('settings')" style="display: none;">SETTINGS</div>
+            <div class="nav-link active" data-page="home" onclick="showPage('home')">ГЛАВНАЯ</div>
+            <div class="nav-link" data-page="library" onclick="showPage('library')">БИБЛИОТЕКА</div>
+            <div class="nav-link" data-page="profile" id="profileLink" onclick="showPage('profile')" style="display: none;">ПРОФИЛЬ</div>
+            <div class="nav-link" data-page="settings" id="settingsLink" onclick="showPage('settings')" style="display: none;">НАСТРОЙКИ</div>
         </nav>
         <div class="nav-right" id="authButtons">
-            <div class="login-btn" onclick="openModal('loginModal')">LOGIN</div>
-            <div class="reg-btn" onclick="openModal('regModal')">REGISTER</div>
+            <div class="login-btn" onclick="openModal('loginModal')">ВХОД</div>
+            <div class="reg-btn" onclick="openModal('regModal')">РЕГИСТРАЦИЯ</div>
         </div>
         <div class="nav-right" id="userPanel" style="display: none;">
             <div class="user-info" id="userEmail"></div>
-            <button class="logout-btn" onclick="logoutUser()">LOGOUT</button>
+            <button class="logout-btn" onclick="logoutUser()">ВЫХОД</button>
         </div>
     </header>
 
@@ -614,42 +597,43 @@
         <!-- HOME PAGE -->
         <div id="home" class="content active">
             <div class="main-card">
-                <h1>EXPEDITION</h1>
-                <p style="color: #666; margin-bottom: 40px; font-size: 1.1rem;">Dark fantasy survival. Explore, fight, rule.</p>
-                <p style="color: #555; margin-bottom: 30px;">Immerse yourself in the world of NAR-KAEL — a medieval kingdom engulfed in darkness and magic. Survive in dangerous lands, battle ancient enemies and uncover the secrets of forbidden magic.</p>
-                <button class="download-btn">DOWNLOAD LAUNCHER</button>
+                <h1>ЭКСПЕДИЦИЯ</h1>
+                <p style="color: #666; margin-bottom: 40px; font-size: 1.1rem;">Тёмное фэнтези выживание. Исследуй, сражайся, властвуй.</p>
+                <p style="color: #555; margin-bottom: 30px;">Погрузись в мир NAR-KAEL — средневекового королевства, охваченного мраком и магией. Выживай в опасных землях, сражайся с древними врагами и раскрывай тайны запретной магии.</p>
+                <button class="download-btn">СКАЧАТЬ ЛАУНЧЕР</button>
             </div>
         </div>
 
         <!-- LIBRARY PAGE -->
         <div id="library" class="content">
-            <h2>MY LIBRARY</h2>
-            <p style="color: #666; margin-bottom: 40px;">Your installed games and projects</p>
+            <h2>МОЯ БИБЛИОТЕКА</h2>
+            <p style="color: #666; margin-bottom: 40px;">Твои установленные игры и проекты</p>
             <div id="libraryContent" class="grid"></div>
         </div>
 
         <!-- PROFILE PAGE -->
         <div id="profile" class="content">
-            <h2>MY PROFILE</h2>
+            <h2>МОЙ ПРОФИЛЬ</h2>
             <div class="main-card">
                 <div style="text-align: left;">
                     <p style="margin-bottom: 15px;"><strong>Email:</strong> <span id="profileEmail"></span></p>
-                    <p style="margin-bottom: 15px;"><strong>Registration Date:</strong> <span id="profileDate"></span></p>
-                    <p style="margin-bottom: 15px;"><strong>Status:</strong> <span style="color: #51cf66;">● Online</span></p>
+                    <p style="margin-bottom: 15px;"><strong>Игровой никнейм:</strong> <span id="profileNickname"></span></p>
+                    <p style="margin-bottom: 15px;"><strong>Дата регистрации:</strong> <span id="profileDate"></span></p>
+                    <p style="margin-bottom: 15px;"><strong>Статус:</strong> <span style="color: #51cf66;">● Онлайн</span></p>
                 </div>
-                <h3 style="margin-top: 40px; font-size: 1.5rem; margin-bottom: 20px;">Purchase History:</h3>
+                <h3 style="margin-top: 40px; font-size: 1.5rem; margin-bottom: 20px;">История покупок:</h3>
                 <table class="history-table">
                     <thead>
                         <tr>
-                            <th>Game</th>
-                            <th>Price</th>
-                            <th>Date</th>
-                            <th>Status</th>
+                            <th>Игра</th>
+                            <th>Цена</th>
+                            <th>Дата</th>
+                            <th>Статус</th>
                         </tr>
                     </thead>
                     <tbody id="purchaseHistory">
                         <tr>
-                            <td colspan="4" style="text-align: center; color: #666;">No purchases yet</td>
+                            <td colspan="4" style="text-align: center; color: #666;">Нет покупок</td>
                         </tr>
                     </tbody>
                 </table>
@@ -658,9 +642,9 @@
 
         <!-- SETTINGS PAGE -->
         <div id="settings" class="content">
-            <h2>SETTINGS</h2>
+            <h2>НАСТРОЙКИ</h2>
             <div class="main-card" style="max-width: 600px;">
-                <h3 style="margin-bottom: 30px; font-size: 1.3rem; text-align: left;">ACCOUNT</h3>
+                <h3 style="margin-bottom: 30px; font-size: 1.3rem; text-align: left;">АККАУНТ</h3>
                 
                 <div style="text-align: left; margin-bottom: 30px;">
                     <label style="display: block; margin-bottom: 10px; color: #aaa;">Email:</label>
@@ -668,15 +652,21 @@
                 </div>
 
                 <div style="text-align: left; margin-bottom: 30px;">
-                    <label style="display: block; margin-bottom: 10px; color: #aaa;">New Password:</label>
-                    <input type="password" id="newPassword" placeholder="Leave blank to keep current password">
-                    <input type="password" id="confirmPassword" placeholder="Confirm password">
-                    <button class="auth-submit" onclick="changePassword()" style="width: 100%; margin-top: 15px;">CHANGE PASSWORD</button>
+                    <label style="display: block; margin-bottom: 10px; color: #aaa;">Игровой никнейм:</label>
+                    <input type="text" id="settingsNickname" placeholder="Ваш игровой никнейм">
+                    <button class="auth-submit" onclick="changeNickname()" style="width: 100%; margin-top: 15px;">ИЗМЕНИТЬ НИКНЕЙМ</button>
                 </div>
 
-                <h3 style="margin-bottom: 20px; font-size: 1.3rem; text-align: left; margin-top: 40px; color: #ff6b6b;">DANGER ZONE</h3>
+                <div style="text-align: left; margin-bottom: 30px;">
+                    <label style="display: block; margin-bottom: 10px; color: #aaa;">Новый пароль:</label>
+                    <input type="password" id="newPassword" placeholder="Оставьте пусто, чтобы не менять">
+                    <input type="password" id="confirmPassword" placeholder="Подтвердите пароль">
+                    <button class="auth-submit" onclick="changePassword()" style="width: 100%; margin-top: 15px;">ИЗМЕНИТЬ ПАРОЛЬ</button>
+                </div>
+
+                <h3 style="margin-bottom: 20px; font-size: 1.3rem; text-align: left; margin-top: 40px; color: #ff6b6b;">ОПАСНАЯ ЗОНА</h3>
                 
-                <button class="reg-btn" onclick="deleteAccount()" style="background: #ff4444; width: 100%; margin-top: 15px;">DELETE ACCOUNT</button>
+                <button class="reg-btn" onclick="deleteAccount()" style="background: #ff4444; width: 100%; margin-top: 15px;">УДАЛИТЬ АККАУНТ</button>
             </div>
         </div>
     </div>
@@ -684,32 +674,33 @@
     <!-- МОДАЛИ АВТОРИЗАЦИИ -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <h2>LOGIN</h2>
+            <h2>ВХОД</h2>
             <div class="error-msg" id="loginError"></div>
             <div class="success-msg" id="loginSuccess"></div>
             <input type="email" id="loginEmail" placeholder="Email">
-            <input type="password" id="loginPass" placeholder="Password">
+            <input type="password" id="loginPass" placeholder="Пароль">
             <button class="auth-submit" id="loginSubmit" onclick="login()">
-                <span id="loginButtonText">SIGN IN</span>
+                <span id="loginButtonText">ВОЙТИ</span>
                 <div class="loader" id="loginLoader"></div>
             </button>
-            <span class="close-btn" onclick="closeModal('loginModal')">CANCEL</span>
+            <span class="close-btn" onclick="closeModal('loginModal')">ОТМЕНА</span>
         </div>
     </div>
 
     <div id="regModal" class="modal">
         <div class="modal-content">
-            <h2>REGISTER</h2>
+            <h2>РЕГИСТРАЦИЯ</h2>
             <div class="error-msg" id="regError"></div>
             <div class="success-msg" id="regSuccess"></div>
             <input type="email" id="regEmail" placeholder="Email">
-            <input type="password" id="regPass" placeholder="Password (min. 6 characters)">
-            <input type="password" id="regPassConfirm" placeholder="Confirm password">
+            <input type="text" id="regNickname" placeholder="Игровой н��кнейм (3-20 символов)">
+            <input type="password" id="regPass" placeholder="Пароль (мин. 6 символов)">
+            <input type="password" id="regPassConfirm" placeholder="Подтвердите пароль">
             <button class="auth-submit" id="regSubmit" onclick="register()">
-                <span id="regButtonText">CREATE ACCOUNT</span>
+                <span id="regButtonText">СОЗДАТЬ АККАУНТ</span>
                 <div class="loader" id="regLoader"></div>
             </button>
-            <span class="close-btn" onclick="closeModal('regModal')">CANCEL</span>
+            <span class="close-btn" onclick="closeModal('regModal')">ОТМЕНА</span>
         </div>
     </div>
 
@@ -726,6 +717,17 @@
             setPersistence, 
             browserLocalPersistence 
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc, 
+            getDoc,
+            updateDoc,
+            query,
+            where,
+            collection,
+            getDocs
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyD9gVWWwnrPg6GNN1Q6I-J6cBeOu-iMee0",
@@ -739,13 +741,13 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
         setPersistence(auth, browserLocalPersistence);
 
         // Проверка статуса авторизации
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
-                // Пользователь залогинен
                 document.getElementById('authButtons').style.display = 'none';
                 document.getElementById('userPanel').style.display = 'flex';
                 document.getElementById('profileLink').style.display = 'block';
@@ -753,9 +755,20 @@
                 document.getElementById('userEmail').textContent = user.email;
                 document.getElementById('settingsEmail').value = user.email;
                 document.getElementById('profileEmail').textContent = user.email;
-                document.getElementById('profileDate').textContent = new Date(user.metadata.creationTime).toLocaleDateString('en-US');
+                document.getElementById('profileDate').textContent = new Date(user.metadata.creationTime).toLocaleDateString('ru-RU');
+
+                // Загружаем данные пользователя из Firestore
+                try {
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (userDoc.exists()) {
+                        const nickname = userDoc.data().nickname;
+                        document.getElementById('profileNickname').textContent = nickname;
+                        document.getElementById('settingsNickname').value = nickname;
+                    }
+                } catch (e) {
+                    console.error("Ошибка загрузки данных:", e);
+                }
             } else {
-                // Пользователь не залогинен
                 document.getElementById('authButtons').style.display = 'flex';
                 document.getElementById('userPanel').style.display = 'none';
                 document.getElementById('profileLink').style.display = 'none';
@@ -764,9 +777,22 @@
             }
         });
 
+        // Проверка уникальности никнейма
+        window.checkNicknameAvailability = async (nickname) => {
+            try {
+                const q = query(collection(db, "users"), where("nickname", "==", nickname));
+                const querySnapshot = await getDocs(q);
+                return querySnapshot.empty;
+            } catch (e) {
+                console.error("Ошибка проверки никнейма:", e);
+                return false;
+            }
+        };
+
         // РЕГИСТРАЦИЯ
         window.register = async () => {
             const email = document.getElementById('regEmail').value.trim();
+            const nickname = document.getElementById('regNickname').value.trim();
             const pass = document.getElementById('regPass').value;
             const passConfirm = document.getElementById('regPassConfirm').value;
             const errorEl = document.getElementById('regError');
@@ -777,18 +803,28 @@
             errorEl.classList.remove('show');
             successEl.classList.remove('show');
 
-            if (!email || !pass || !passConfirm) {
-                showError(errorEl, 'Fill in all fields');
+            if (!email || !nickname || !pass || !passConfirm) {
+                showError(errorEl, 'Заполните все поля');
+                return;
+            }
+
+            if (nickname.length < 3 || nickname.length > 20) {
+                showError(errorEl, 'Никнейм должен быть от 3 до 20 символов');
+                return;
+            }
+
+            if (!/^[a-zA-Z0-9_-]+$/.test(nickname)) {
+                showError(errorEl, 'Ни��нейм может содержать только буквы, цифры, _ и -');
                 return;
             }
 
             if (pass !== passConfirm) {
-                showError(errorEl, 'Passwords do not match');
+                showError(errorEl, 'Пароли не совпадают');
                 return;
             }
 
             if (pass.length < 6) {
-                showError(errorEl, 'Password must be at least 6 characters');
+                showError(errorEl, 'Пароль должен быть не менее 6 символов');
                 return;
             }
 
@@ -796,23 +832,44 @@
             loader.classList.add('show');
 
             try {
-                await createUserWithEmailAndPassword(auth, email, pass);
-                successEl.textContent = '✓ Successfully registered! You are now logged in.';
+                // Проверяем доступность никнейма
+                const isAvailable = await window.checkNicknameAvailability(nickname);
+                if (!isAvailable) {
+                    showError(errorEl, 'Этот никнейм уже занят');
+                    submitBtn.disabled = false;
+                    loader.classList.remove('show');
+                    return;
+                }
+
+                // Создаём аккаунт
+                const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+                const user = userCredential.user;
+
+                // Сохраняем никнейм в Firestore
+                await setDoc(doc(db, "users", user.uid), {
+                    nickname: nickname,
+                    email: email,
+                    createdAt: new Date(),
+                    uid: user.uid
+                });
+
+                successEl.textContent = '✓ Успешно! Вы автоматически вошли в аккаунт.';
                 successEl.classList.add('show');
                 document.getElementById('regEmail').value = '';
+                document.getElementById('regNickname').value = '';
                 document.getElementById('regPass').value = '';
                 document.getElementById('regPassConfirm').value = '';
                 setTimeout(() => {
                     closeModal('regModal');
                 }, 1500);
             } catch (e) {
-                let errorMsg = 'Registration error';
+                let errorMsg = 'Ошибка регистрации';
                 if (e.code === 'auth/email-already-in-use') {
-                    errorMsg = 'This email is already registered';
+                    errorMsg = 'Этот email уже зарегистрирован';
                 } else if (e.code === 'auth/invalid-email') {
-                    errorMsg = 'Invalid email';
+                    errorMsg = 'Некорректный email';
                 } else if (e.code === 'auth/weak-password') {
-                    errorMsg = 'Weak password';
+                    errorMsg = 'Слишком слабый пароль';
                 } else {
                     errorMsg = e.message;
                 }
@@ -836,7 +893,7 @@
             successEl.classList.remove('show');
 
             if (!email || !pass) {
-                showError(errorEl, 'Fill in email and password');
+                showError(errorEl, 'Заполните email и пароль');
                 return;
             }
 
@@ -845,7 +902,7 @@
 
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
-                successEl.textContent = '✓ Welcome!';
+                successEl.textContent = '✓ Добро пожаловать!';
                 successEl.classList.add('show');
                 document.getElementById('loginEmail').value = '';
                 document.getElementById('loginPass').value = '';
@@ -853,13 +910,13 @@
                     closeModal('loginModal');
                 }, 1000);
             } catch (e) {
-                let errorMsg = 'Login error';
+                let errorMsg = 'Ошибка входа';
                 if (e.code === 'auth/user-not-found') {
-                    errorMsg = 'User not found';
+                    errorMsg = 'Пользователь не найден';
                 } else if (e.code === 'auth/wrong-password') {
-                    errorMsg = 'Incorrect password';
+                    errorMsg = 'Неверный пароль';
                 } else if (e.code === 'auth/invalid-email') {
-                    errorMsg = 'Invalid email';
+                    errorMsg = 'Некорректный email';
                 } else {
                     errorMsg = e.message;
                 }
@@ -874,9 +931,46 @@
         window.logoutUser = async () => {
             try {
                 await signOut(auth);
-                console.log('Successfully logged out');
+                console.log('Успешно вышли');
             } catch (e) {
-                console.error('Logout error:', e);
+                console.error('Ошибка выхода:', e);
+            }
+        };
+
+        // ИЗМЕНЕНИЕ НИКНЕЙМА
+        window.changeNickname = async () => {
+            const newNickname = document.getElementById('settingsNickname').value.trim();
+            const user = auth.currentUser;
+
+            if (!newNickname) {
+                alert('Введите никнейм');
+                return;
+            }
+
+            if (newNickname.length < 3 || newNickname.length > 20) {
+                alert('Никнейм должен быть от 3 до 20 символов');
+                return;
+            }
+
+            if (!/^[a-zA-Z0-9_-]+$/.test(newNickname)) {
+                alert('Никнейм может содержать только буквы, цифры, _ и -');
+                return;
+            }
+
+            try {
+                const isAvailable = await window.checkNicknameAvailability(newNickname);
+                if (!isAvailable) {
+                    alert('Этот никнейм уже занят');
+                    return;
+                }
+
+                await updateDoc(doc(db, "users", user.uid), {
+                    nickname: newNickname
+                });
+                alert('✓ Никнейм успешно изменён');
+                document.getElementById('profileNickname').textContent = newNickname;
+            } catch (e) {
+                alert('Ошибка: ' + e.message);
             }
         };
 
@@ -887,38 +981,38 @@
             const user = auth.currentUser;
 
             if (!newPass || !confirmPass) {
-                alert('Fill in both fields');
+                alert('Заполните оба поля');
                 return;
             }
 
             if (newPass !== confirmPass) {
-                alert('Passwords do not match');
+                alert('Пароли не совпадают');
                 return;
             }
 
             if (newPass.length < 6) {
-                alert('Password must be at least 6 characters');
+                alert('Пароль должен быть не менее 6 символов');
                 return;
             }
 
             try {
                 await updatePassword(user, newPass);
-                alert('✓ Password changed successfully');
+                alert('✓ Пароль успешно изменён');
                 document.getElementById('newPassword').value = '';
                 document.getElementById('confirmPassword').value = '';
             } catch (e) {
-                alert('Error: ' + e.message);
+                alert('Ошибка: ' + e.message);
             }
         };
 
         // УДАЛЕНИЕ АККАУНТА
         window.deleteAccount = async () => {
-            if (confirm('⚠️ Are you sure? This action is irreversible!')) {
+            if (confirm('⚠️ Вы уверены? Это действие необратимо!')) {
                 try {
                     await deleteUser(auth.currentUser);
-                    alert('✓ Account deleted');
+                    alert('✓ Аккаунт удалён');
                 } catch (e) {
-                    alert('Error: ' + e.message);
+                    alert('Ошибка: ' + e.message);
                 }
             }
         };
@@ -931,7 +1025,7 @@
         // Библиотека
         window.loadLibrary = () => {
             const library = document.getElementById('libraryContent');
-            library.innerHTML = '<p style="color: #666; text-align: center; padding: 40px; grid-column: 1/-1;">No installed games yet</p>';
+            library.innerHTML = '<p style="color: #666; text-align: center; padding: 40px; grid-column: 1/-1;">Нет установленных игр</p>';
         };
     </script>
 
