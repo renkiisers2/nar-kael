@@ -3,36 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAR-KAEL | OFFICIAL SITE</title>
+    <title>NAR-KAEL | THE VOID CALLS</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="overlay"></div>
-    <header>
-        <div class="logo">NAR-KAEL</div>
-        <nav>
-            <a href="#">ГЛАВНАЯ</a>
-            <a href="#">О ПРОЕКТЕ</a>
-            <a href="#">ВИКИ</a>
-        </nav>
-    </header>
+    <div class="background-animation"></div>
+    <div class="glass-overlay"></div>
 
-    <main>
-        <section class="hero">
-            <h1>EXPEDITION <span class="white">NAR-KAEL</span></h1>
-            <p>Исследуй забытый мир. Выживай среди теней.</p>
-            <div class="actions">
-                <button class="btn-main">СКАЧАТЬ ЛАУНЧЕР</button>
-                <button class="btn-sub">РЕГИСТРАЦИЯ</button>
+    <nav class="navbar">
+        <div class="logo">NAR<span>KAEL</span></div>
+        <div class="nav-links">
+            <a href="#" class="active">ГЛАВНАЯ</a>
+            <a href="#">ЛОКАЦИИ</a>
+            <a href="#">МАГАЗИН</a>
+            <a href="#">ФОРУМ</a>
+        </div>
+    </nav>
+
+    <section class="main-content">
+        <div class="title-container">
+            <h2 class="subtitle">ДОБРО ПОЖАЛОВАТЬ В БЕЗДНУ</h2>
+            <h1 class="main-title">NAR-KAEL</h1>
+            <p class="description">Тёмное фэнтези выживание нового поколения. Сражайся, создавай, властвуй. Твоя история начинается здесь.</p>
+            
+            <div class="button-group">
+                <a href="#" class="btn btn-primary">ИГРАТЬ БЕСПЛАТНО</a>
+                <a href="#" class="btn btn-secondary">УЗНАТЬ БОЛЬШЕ</a>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <footer>
-        <div class="status-bar">
-            <div class="status-item">STATUS: <span class="online">ONLINE</span></div>
-            <div class="status-item">VERSION: 1.0.4</div>
-            <div class="status-item">PLAYERS: 0/5000</div>
+    <footer class="footer-stats">
+        <div class="stat-box">
+            <span class="label">ОНЛАЙН:</span>
+            <span class="value green">1,240</span>
+        </div>
+        <div class="stat-box">
+            <span class="label">ВЕРСИЯ:</span>
+            <span class="value">2.1.0-ALPHA</span>
         </div>
     </footer>
 </body>
