@@ -34,15 +34,15 @@
             position: absolute;
             top: 50%; left: 50%;
             width: 50vw; height: 50vw;
-            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255,255,255,0.02) 0%, transparent 70%);
             transform: translate(-50%, -50%);
-            filter: blur(100px);
-            animation: pulse 10s infinite alternate ease-in-out;
+            filter: blur(80px);
+            animation: pulse 12s infinite alternate ease-in-out;
         }
 
         @keyframes pulse {
-            from { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
-            to { transform: translate(-50%, -50%) scale(1.3); opacity: 0.7; }
+            from { transform: translate(-50%, -50%) scale(1); opacity: 0.2; }
+            to { transform: translate(-50%, -50%) scale(1.2); opacity: 0.4; }
         }
 
         /* Навигация */
@@ -54,14 +54,14 @@
             z-index: 10;
             border-bottom: 1px solid rgba(255,255,255,0.05);
             backdrop-filter: blur(10px);
-            animation: slideDown 0.6s ease-out;
+            animation: slideDown 0.4s ease-out;
             flex-shrink: 0;
         }
 
         @keyframes slideDown {
             from {
                 opacity: 0;
-                transform: translateY(-30px);
+                transform: translateY(-20px);
             }
             to {
                 opacity: 1;
@@ -75,12 +75,11 @@
             font-weight: 700;
             letter-spacing: 6px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.2s;
         }
 
         .logo:hover { 
             color: #aaa;
-            text-shadow: 0 0 20px rgba(255,255,255,0.3);
         }
 
         /* Главное меню */
@@ -88,7 +87,7 @@
             display: flex;
             gap: 40px;
             align-items: center;
-            animation: fadeIn 0.8s ease-out;
+            animation: fadeIn 0.5s ease-out;
         }
 
         @keyframes fadeIn {
@@ -102,7 +101,7 @@
             font-weight: 700;
             letter-spacing: 2px;
             color: #666;
-            transition: 0.3s;
+            transition: 0.2s;
             position: relative;
             padding-bottom: 5px;
         }
@@ -119,7 +118,7 @@
             width: 0;
             height: 2px;
             background: #fff;
-            transition: width 0.3s ease;
+            transition: width 0.2s ease;
         }
 
         .nav-link:hover::after, .nav-link.active::after {
@@ -134,13 +133,13 @@
             display: flex;
             align-items: center;
             gap: 30px;
-            animation: slideInRight 0.6s ease-out;
+            animation: slideInRight 0.4s ease-out;
         }
 
         @keyframes slideInRight {
             from {
                 opacity: 0;
-                transform: translateX(30px);
+                transform: translateX(20px);
             }
             to {
                 opacity: 1;
@@ -154,7 +153,7 @@
             font-size: 0.8rem;
             font-weight: 700;
             letter-spacing: 2px;
-            transition: 0.3s;
+            transition: 0.2s;
             position: relative;
         }
 
@@ -170,13 +169,13 @@
             cursor: pointer;
             font-size: 0.8rem;
             font-weight: 700;
-            transition: 0.4s;
+            transition: 0.2s;
             border: none;
         }
 
         .reg-btn:hover, .logout-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255,255,255,0.15);
         }
 
         .logout-btn {
@@ -186,7 +185,7 @@
         .user-info {
             color: #aaa;
             font-size: 0.85rem;
-            animation: fadeIn 0.6s ease-out;
+            animation: fadeIn 0.4s ease-out;
         }
 
         /* Основной контент */
@@ -201,9 +200,9 @@
             min-height: auto;
             padding: 40px 80px;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(15px);
             pointer-events: none;
-            transition: all 0.5s ease-out;
+            transition: all 0.3s ease-out;
             display: none;
         }
 
@@ -223,13 +222,13 @@
             text-align: center;
             max-width: 900px;
             margin: 0 auto;
-            animation: cardAppear 0.8s ease-out;
+            animation: cardAppear 0.5s ease-out;
         }
 
         @keyframes cardAppear {
             from {
                 opacity: 0;
-                transform: scale(0.95) translateY(30px);
+                transform: scale(0.98) translateY(20px);
             }
             to {
                 opacity: 1;
@@ -237,20 +236,123 @@
             }
         }
 
-        h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 6rem;
-            font-weight: 700;
-            background: linear-gradient(to bottom, #fff 40%, #444 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
-            animation: textGlow 3s ease-in-out infinite;
+        /* ГЛАВНАЯ СТРАНИЦА - НОВЫЙ ДИЗАЙН */
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 150px);
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeIn 0.6s ease-out;
         }
 
-        @keyframes textGlow {
-            0%, 100% { text-shadow: 0 0 0px rgba(255,255,255,0); }
-            50% { text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 5rem;
+            font-weight: 700;
+            background: linear-gradient(to bottom, #fff 40%, #666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            letter-spacing: 4px;
+        }
+
+        .hero-subtitle {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            color: #888;
+            margin-bottom: 50px;
+            letter-spacing: 3px;
+        }
+
+        .play-btn {
+            background: #fff;
+            color: #000;
+            padding: 22px 80px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+        }
+
+        .play-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255,255,255,0.2);
+            background: #f0f0f0;
+        }
+
+        .play-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* DOWNLOAD PAGE */
+        .download-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .download-option {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            transition: all 0.2s ease;
+        }
+
+        .download-option:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .download-option h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .download-option p {
+            color: #888;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .download-btn {
+            background: #fff;
+            color: #000;
+            padding: 16px 45px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            border: none;
+            display: inline-block;
+        }
+
+        .download-btn:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,255,255,0.15);
+        }
+
+        .download-btn.secondary {
+            background: transparent;
+            border: 2px solid #333;
+            color: #fff;
+        }
+
+        .download-btn.secondary:hover {
+            border-color: #fff;
+            background: rgba(255,255,255,0.05);
         }
 
         h2 {
@@ -258,54 +360,7 @@
             font-size: 3rem;
             margin-bottom: 30px;
             letter-spacing: 3px;
-            animation: slideInLeft 0.6s ease-out;
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Кнопка скачивания */
-        .download-btn {
-            background: transparent;
-            border: 2px solid #333;
-            color: #fff;
-            padding: 20px 50px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            letter-spacing: 2px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .download-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .download-btn:hover::before {
-            left: 100%;
-        }
-
-        .download-btn:hover {
-            border-color: #fff;
-            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+            animation: fadeIn 0.4s ease-out;
         }
 
         /* Модальные окна */
@@ -318,7 +373,7 @@
             backdrop-filter: blur(15px);
             justify-content: center;
             align-items: center;
-            animation: fadeInBg 0.3s ease-out;
+            animation: fadeInBg 0.2s ease-out;
             overflow-y: auto;
         }
 
@@ -337,14 +392,14 @@
             width: 100%;
             max-width: 400px;
             text-align: center;
-            animation: modalSlide 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: modalSlide 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
             margin: auto;
         }
 
         @keyframes modalSlide {
             from {
                 opacity: 0;
-                transform: scale(0.8) translateY(30px);
+                transform: scale(0.9) translateY(20px);
             }
             to {
                 opacity: 1;
@@ -369,14 +424,13 @@
             border-radius: 12px;
             outline: none;
             font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             box-sizing: border-box;
         }
 
         input:focus { 
             border-color: #fff;
-            box-shadow: 0 0 15px rgba(255,255,255,0.1);
-            transform: translateY(-2px);
+            box-shadow: 0 0 10px rgba(255,255,255,0.08);
         }
 
         input::placeholder { color: #555; }
@@ -390,36 +444,21 @@
             border-radius: 12px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             margin-bottom: 15px;
             position: relative;
             overflow: hidden;
         }
 
-        .auth-submit::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.2);
-            transition: left 0.3s ease;
-        }
-
-        .auth-submit:hover::before {
-            left: 100%;
-        }
-
         .auth-submit:hover {
-            background: #ccc;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+            background: #f0f0f0;
+            transform: translateY(-1px);
         }
 
         .auth-submit:disabled {
             background: #555;
             cursor: not-allowed;
+            transform: none;
         }
 
         .close-btn {
@@ -428,7 +467,7 @@
             text-decoration: none;
             font-size: 0.7rem;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.2s;
         }
 
         .close-btn:hover { color: #aaa; }
@@ -447,15 +486,15 @@
             border-radius: 20px;
             padding: 30px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             cursor: pointer;
-            animation: cardFloat 0.6s ease-out;
+            animation: cardFloat 0.4s ease-out;
         }
 
         @keyframes cardFloat {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -465,8 +504,8 @@
 
         .card:hover {
             border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-15px);
-            box-shadow: 0 20px 40px rgba(255,255,255,0.05);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(255,255,255,0.04);
         }
 
         .card-title {
@@ -480,14 +519,14 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 30px;
-            animation: fadeIn 0.6s ease-out;
+            animation: fadeIn 0.4s ease-out;
         }
 
         .history-table th, .history-table td {
             padding: 15px;
             text-align: left;
             border-bottom: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .history-table th {
@@ -505,13 +544,13 @@
             font-size: 0.9rem;
             margin-bottom: 15px;
             display: none;
-            animation: shake 0.4s ease;
+            animation: shake 0.3s ease;
         }
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
         }
 
         .success-msg {
@@ -519,13 +558,13 @@
             font-size: 0.9rem;
             margin-bottom: 15px;
             display: none;
-            animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: popIn 0.3s ease;
         }
 
         @keyframes popIn {
             from {
                 opacity: 0;
-                transform: scale(0.8);
+                transform: scale(0.9);
             }
             to {
                 opacity: 1;
@@ -544,7 +583,7 @@
             border: 2px solid rgba(255,255,255,0.3);
             border-top: 2px solid white;
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            animation: spin 0.6s linear infinite;
         }
 
         @keyframes spin {
@@ -561,13 +600,23 @@
                 gap: 20px;
             }
 
-            h1 { font-size: 3rem; }
+            .hero-title { font-size: 3rem; }
+            .hero-subtitle { font-size: 1.3rem; }
             h2 { font-size: 2rem; }
             
             .main-card { padding: 40px; }
             .content { padding: 20px; }
 
             nav { flex-direction: column; gap: 15px; }
+
+            .play-btn {
+                padding: 18px 50px;
+                font-size: 1rem;
+            }
+
+            .download-option {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
@@ -594,13 +643,37 @@
     </header>
 
     <div class="pages-wrapper">
-        <!-- HOME PAGE -->
+        <!-- HOME PAGE - НОВАЯ ВЕРСИЯ -->
         <div id="home" class="content active">
-            <div class="main-card">
-                <h1>ЭКСПЕДИЦИЯ</h1>
-                <p style="color: #666; margin-bottom: 40px; font-size: 1.1rem;">Тёмное фэнтези выживание. Исследуй, сражайся, властвуй.</p>
-                <p style="color: #555; margin-bottom: 30px;">Погрузись в мир NAR-KAEL — средневекового королевства, охваченного мраком и магией. Выживай в опасных землях, сражайся с древними врагами и раскрывай тайны запретной магии.</p>
-                <button class="download-btn">СКАЧАТЬ ЛАУНЧЕР</button>
+            <div class="hero-section">
+                <h1 class="hero-title">EXPEDITION:</h1>
+                <h2 class="hero-subtitle">NAR-KAEL</h2>
+                <button class="play-btn" onclick="showPage('download')">ИГРАТЬ</button>
+            </div>
+        </div>
+
+        <!-- DOWNLOAD PAGE -->
+        <div id="download" class="content">
+            <div class="download-section">
+                <h2 style="text-align: center; margin-bottom: 50px;">СКАЧАТЬ ИГРУ</h2>
+                
+                <!-- Автоматическая установка -->
+                <div class="download-option">
+                    <h3>🚀 Автоматическая установка</h3>
+                    <p>Скачайте лаунчер для быстрой и удобной установки игры. Лаунчер автоматически загрузит все необходимые файлы и настроит игру.</p>
+                    <button class="download-btn" onclick="downloadLauncher()">СКАЧАТЬ ЛАУНЧЕР (.EXE)</button>
+                </div>
+
+                <!-- Ручная установка -->
+                <div class="download-option">
+                    <h3>📦 Ручная установка</h3>
+                    <p>Скачайте архив с игрой и установите вручную. Подходит для опытных пользователей или при проблемах с лаунчером.</p>
+                    <button class="download-btn secondary" onclick="downloadManual()">СКАЧАТЬ NAR-KAEL.ZIP</button>
+                </div>
+
+                <p style="text-align: center; color: #666; margin-top: 40px; font-size: 0.9rem;">
+                    Системные требования: Windows 10/11, 8GB RAM, DirectX 11
+                </p>
             </div>
         </div>
 
@@ -717,18 +790,18 @@
             setPersistence, 
             browserLocalPersistence 
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { 
-    getFirestore, 
-    doc, 
-    setDoc, 
-    getDoc,
-    updateDoc,
-    deleteDoc,  // ← ВОТ ЭТУ СТРОКУ ДОБАВЬТЕ
-    query,
-    where,
-    collection,
-    getDocs
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc, 
+            getDoc,
+            updateDoc,
+            deleteDoc,
+            query,
+            where,
+            collection,
+            getDocs
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyD9gVWWwnrPg6GNN1Q6I-J6cBeOu-iMee0",
@@ -778,107 +851,95 @@ import {
             }
         });
 
-        // Проверка уникальности никнейма
-        window.checkNicknameAvailability = async (nickname) => {
+        // РЕГИСТРАЦИЯ
+        window.register = async () => {
+            const email = document.getElementById('regEmail').value.trim();
+            const nickname = document.getElementById('regNickname').value.trim();
+            const pass = document.getElementById('regPass').value;
+            const passConfirm = document.getElementById('regPassConfirm').value;
+            const errorEl = document.getElementById('regError');
+            const successEl = document.getElementById('regSuccess');
+            const submitBtn = document.getElementById('regSubmit');
+            const loader = document.getElementById('regLoader');
+
+            errorEl.classList.remove('show');
+            successEl.classList.remove('show');
+
+            if (!email || !nickname || !pass || !passConfirm) {
+                showError(errorEl, 'Заполните все поля');
+                return;
+            }
+
+            if (nickname.length < 3 || nickname.length > 20) {
+                showError(errorEl, 'Никнейм должен быть от 3 до 20 символов');
+                return;
+            }
+
+            if (!/^[a-zA-Z0-9_-]+$/.test(nickname)) {
+                showError(errorEl, 'Никнейм может содержать только буквы, цифры, _ и -');
+                return;
+            }
+
+            if (pass !== passConfirm) {
+                showError(errorEl, 'Пароли не совпадают');
+                return;
+            }
+
+            if (pass.length < 6) {
+                showError(errorEl, 'Пароль должен быть не менее 6 символов');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            loader.classList.add('show');
+
             try {
-                const q = query(collection(db, "users"), where("nickname", "==", nickname));
-                const querySnapshot = await getDocs(q);
-                return querySnapshot.empty;
+                // Создаём аккаунт
+                const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+                const user = userCredential.user;
+
+                // Резервируем никнейм (атомарная операция)
+                await setDoc(doc(db, "nicknames", nickname), {
+                    uid: user.uid,
+                    createdAt: new Date()
+                });
+
+                // Сохраняем данные пользователя
+                await setDoc(doc(db, "users", user.uid), {
+                    nickname: nickname,
+                    email: email,
+                    createdAt: new Date(),
+                    uid: user.uid
+                });
+
+                successEl.textContent = '✓ Успешно! Вы автоматически вошли в аккаунт.';
+                successEl.classList.add('show');
+                document.getElementById('regEmail').value = '';
+                document.getElementById('regNickname').value = '';
+                document.getElementById('regPass').value = '';
+                document.getElementById('regPassConfirm').value = '';
+                setTimeout(() => {
+                    closeModal('regModal');
+                }, 1500);
             } catch (e) {
-                console.error("Ошибка проверки никнейма:", e);
-                return false;
+                let errorMsg = 'Ошибка регистрации';
+                if (e.code === 'auth/email-already-in-use') {
+                    errorMsg = 'Этот email уже зарегистрирован';
+                } else if (e.code === 'auth/invalid-email') {
+                    errorMsg = 'Некорректный email';
+                } else if (e.code === 'auth/weak-password') {
+                    errorMsg = 'Слишком слабый пароль';
+                } else if (e.code === 'permission-denied') {
+                    errorMsg = 'Этот никнейм уже занят';
+                } else {
+                    errorMsg = e.message;
+                }
+                showError(errorEl, errorMsg);
+            } finally {
+                submitBtn.disabled = false;
+                loader.classList.remove('show');
             }
         };
-
-        // РЕГИСТРАЦИЯ
-window.register = async () => {
-    const email = document.getElementById('regEmail').value.trim();
-    const nickname = document.getElementById('regNickname').value.trim();
-    const pass = document.getElementById('regPass').value;
-    const passConfirm = document.getElementById('regPassConfirm').value;
-    const errorEl = document.getElementById('regError');
-    const successEl = document.getElementById('regSuccess');
-    const submitBtn = document.getElementById('regSubmit');
-    const loader = document.getElementById('regLoader');
-
-    errorEl.classList.remove('show');
-    successEl.classList.remove('show');
-
-    if (!email || !nickname || !pass || !passConfirm) {
-        showError(errorEl, 'Заполните все поля');
-        return;
-    }
-
-    if (nickname.length < 3 || nickname.length > 20) {
-        showError(errorEl, 'Никнейм должен быть от 3 до 20 символов');
-        return;
-    }
-
-    if (!/^[a-zA-Z0-9_-]+$/.test(nickname)) {
-        showError(errorEl, 'Никнейм может содержать только буквы, цифры, _ и -');
-        return;
-    }
-
-    if (pass !== passConfirm) {
-        showError(errorEl, 'Пароли не совпадают');
-        return;
-    }
-
-    if (pass.length < 6) {
-        showError(errorEl, 'Пароль должен быть не менее 6 символов');
-        return;
-    }
-
-    submitBtn.disabled = true;
-    loader.classList.add('show');
-
-    try {
-        // Создаём аккаунт
-        const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-        const user = userCredential.user;
-
-        // Резервируем никнейм (атомарная операция)
-        await setDoc(doc(db, "nicknames", nickname), {
-            uid: user.uid,
-            createdAt: new Date()
-        });
-
-        // Сохраняем данные пользователя
-        await setDoc(doc(db, "users", user.uid), {
-            nickname: nickname,
-            email: email,
-            createdAt: new Date(),
-            uid: user.uid
-        });
-
-        successEl.textContent = '✓ Успешно! Вы автоматически вошли в аккаунт.';
-        successEl.classList.add('show');
-        document.getElementById('regEmail').value = '';
-        document.getElementById('regNickname').value = '';
-        document.getElementById('regPass').value = '';
-        document.getElementById('regPassConfirm').value = '';
-        setTimeout(() => {
-            closeModal('regModal');
-        }, 1500);
-    } catch (e) {
-        let errorMsg = 'Ошибка регистрации';
-        if (e.code === 'auth/email-already-in-use') {
-            errorMsg = 'Этот email уже зарегистрирован';
-        } else if (e.code === 'auth/invalid-email') {
-            errorMsg = 'Некорректный email';
-        } else if (e.code === 'auth/weak-password') {
-            errorMsg = 'Слишком слабый пароль';
-        } else if (e.code === 'permission-denied') {
-            errorMsg = 'Этот никнейм уже занят';
-        } else {
-            errorMsg = e.message;
-        }
-        showError(errorEl, errorMsg);
-    } finally {
-        submitBtn.disabled = false;
-        loader.classList.remove('show');
-    }
-};
 
         // ВХОД
         window.login = async () => {
@@ -911,12 +972,12 @@ window.register = async () => {
                 }, 1000);
             } catch (e) {
                 let errorMsg = 'Ошибка входа';
-                if (e.code === 'auth/user-not-found') {
-                    errorMsg = 'Пользователь не найден';
-                } else if (e.code === 'auth/wrong-password') {
-                    errorMsg = 'Неверный пароль';
+                if (e.code === 'auth/user-not-found' || e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
+                    errorMsg = 'Неверный email или пароль';
                 } else if (e.code === 'auth/invalid-email') {
                     errorMsg = 'Некорректный email';
+                } else if (e.code === 'auth/too-many-requests') {
+                    errorMsg = 'Слишком много попыток. Попробуйте позже';
                 } else {
                     errorMsg = e.message;
                 }
@@ -937,61 +998,81 @@ window.register = async () => {
             }
         };
 
-      // ИЗМЕНЕНИЕ НИКНЕЙМА
-window.changeNickname = async () => {
-    const newNickname = document.getElementById('settingsNickname').value.trim();
-    const user = auth.currentUser;
+        // ИЗМЕНЕНИЕ НИКНЕЙМА
+        window.changeNickname = async () => {
+            const newNickname = document.getElementById('settingsNickname').value.trim();
+            const user = auth.currentUser;
 
-    if (!newNickname) {
-        alert('Введите никнейм');
-        return;
-    }
+            if (!user) {
+                alert('Вы не авторизованы');
+                return;
+            }
 
-    if (newNickname.length < 3 || newNickname.length > 20) {
-        alert('Никнейм должен быть от 3 до 20 символов');
-        return;
-    }
+            if (!newNickname) {
+                alert('Введите никнейм');
+                return;
+            }
 
-    if (!/^[a-zA-Z0-9_-]+$/.test(newNickname)) {
-        alert('Никнейм может содержать только буквы, цифры, _ и -');
-        return;
-    }
+            if (newNickname.length < 3 || newNickname.length > 20) {
+                alert('Никнейм должен быть от 3 до 20 символов');
+                return;
+            }
 
-    try {
-        // Получаем старый никнейм
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        const oldNickname = userDoc.data().nickname;
+            if (!/^[a-zA-Z0-9_-]+$/.test(newNickname)) {
+                alert('Никнейм может содержать только буквы, цифры, _ и -');
+                return;
+            }
 
-        // Резервируем новый никнейм
-        await setDoc(doc(db, "nicknames", newNickname), {
-            uid: user.uid,
-            createdAt: new Date()
-        });
+            try {
+                // Получаем старый никнейм
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (!userDoc.exists()) {
+                    alert('Данные пользователя не найдены');
+                    return;
+                }
+                
+                const oldNickname = userDoc.data().nickname;
 
-        // Обновляем никнейм пользователя
-        await updateDoc(doc(db, "users", user.uid), {
-            nickname: newNickname
-        });
+                if (oldNickname === newNickname) {
+                    alert('Это уже ваш текущий никнейм');
+                    return;
+                }
 
-        // Удаляем старый никнейм из резерва
-        await deleteDoc(doc(db, "nicknames", oldNickname));
+                // Резервируем новый никнейм
+                await setDoc(doc(db, "nicknames", newNickname), {
+                    uid: user.uid,
+                    createdAt: new Date()
+                });
 
-        alert('✓ Никнейм успешно изменён');
-        document.getElementById('profileNickname').textContent = newNickname;
-    } catch (e) {
-        if (e.code === 'permission-denied') {
-            alert('Этот никнейм уже занят');
-        } else {
-            alert('Ошибка: ' + e.message);
-        }
-    }
-};
+                // Обновляем никнейм пользователя
+                await updateDoc(doc(db, "users", user.uid), {
+                    nickname: newNickname
+                });
+
+                // Удаляем старый никнейм из резерва
+                await deleteDoc(doc(db, "nicknames", oldNickname));
+
+                alert('✓ Никнейм успешно изменён');
+                document.getElementById('profileNickname').textContent = newNickname;
+            } catch (e) {
+                if (e.code === 'permission-denied') {
+                    alert('Этот никнейм уже занят');
+                } else {
+                    alert('Ошибка: ' + e.message);
+                }
+            }
+        };
 
         // ИЗМЕНЕНИЕ ПАРОЛЯ
         window.changePassword = async () => {
             const newPass = document.getElementById('newPassword').value;
             const confirmPass = document.getElementById('confirmPassword').value;
             const user = auth.currentUser;
+
+            if (!user) {
+                alert('Вы не авторизованы');
+                return;
+            }
 
             if (!newPass || !confirmPass) {
                 alert('Заполните оба поля');
@@ -1014,17 +1095,42 @@ window.changeNickname = async () => {
                 document.getElementById('newPassword').value = '';
                 document.getElementById('confirmPassword').value = '';
             } catch (e) {
-                alert('Ошибка: ' + e.message);
+                if (e.code === 'auth/requires-recent-login') {
+                    alert('Для изменения пароля необходимо повторно войти в аккаунт');
+                } else {
+                    alert('Ошибка: ' + e.message);
+                }
             }
         };
 
         // УДАЛЕНИЕ АККАУНТА
         window.deleteAccount = async () => {
-            if (confirm('⚠️ Вы уверены? Это действие необратимо!')) {
-                try {
-                    await deleteUser(auth.currentUser);
-                    alert('✓ Аккаунт удалён');
-                } catch (e) {
+            if (!confirm('⚠️ Вы уверены? Это действие необратимо!')) {
+                return;
+            }
+
+            const user = auth.currentUser;
+            if (!user) {
+                alert('Вы не авторизованы');
+                return;
+            }
+
+            try {
+                // Получаем никнейм пользователя
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists()) {
+                    const nickname = userDoc.data().nickname;
+                    // Удаляем резервацию никнейма
+                    await deleteDoc(doc(db, "nicknames", nickname));
+                }
+
+                // Удаляем аккаунт
+                await deleteUser(user);
+                alert('✓ Аккаунт удалён');
+            } catch (e) {
+                if (e.code === 'auth/requires-recent-login') {
+                    alert('Для удаления аккаунта необходимо повторно войти');
+                } else {
                     alert('Ошибка: ' + e.message);
                 }
             }
@@ -1049,8 +1155,8 @@ window.changeNickname = async () => {
 
         function closeModal(id) {
             document.getElementById(id).classList.remove('active');
-            const errorEl = document.getElementById(id + 'Error');
-            const successEl = document.getElementById(id + 'Success');
+            const errorEl = document.getElementById(id === 'loginModal' ? 'loginError' : 'regError');
+            const successEl = document.getElementById(id === 'loginModal' ? 'loginSuccess' : 'regSuccess');
             if (errorEl) errorEl.classList.remove('show');
             if (successEl) successEl.classList.remove('show');
         }
@@ -1081,6 +1187,19 @@ window.changeNickname = async () => {
             }
         }
 
+        // Функции скачивания
+        function downloadLauncher() {
+            alert('🚀 Скачивание лаунчера начнется в ближайшее время!\n\nПока функционал в разработке.');
+            // Здесь будет код для скачивания лаунчера
+            // window.location.href = 'path/to/launcher.exe';
+        }
+
+        function downloadManual() {
+            alert('📦 Скачивание архива начнется в ближайшее время!\n\nПока функционал в разработке.');
+            // Здесь будет код для скачивания ZIP
+            // window.location.href = 'path/to/nar-kael.zip';
+        }
+
         // Закрытие модалей по клику на фон
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', (e) => {
@@ -1091,12 +1210,14 @@ window.changeNickname = async () => {
         });
 
         // Enter для отправки форм
-        document.getElementById('loginPass').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') window.login();
-        });
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('loginPass').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') window.login();
+            });
 
-        document.getElementById('regPassConfirm').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') window.register();
+            document.getElementById('regPassConfirm').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') window.register();
+            });
         });
     </script>
 </body>
