@@ -3,36 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAR-KAEL | OFFICIAL SITE</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;900&display=swap" rel="stylesheet">
+    <title>Мой Проект | Вход</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .auth-card {
+            background: #2d2d2d;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #444;
+            background: #3d3d3d;
+            color: white;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover { background-color: #0056b3; }
+        .toggle-link { margin-top: 15px; font-size: 0.9rem; color: #aaa; cursor: pointer; }
+        .toggle-link span { color: #007bff; }
+    </style>
 </head>
 <body>
-    <div class="background-glow"></div>
+
+<div class="auth-card" id="auth-box">
+    <h2 id="form-title">Войти в проект</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Пароль">
+    <button onclick="handleAuth()" id="main-btn">Войти</button>
     
-    <header>
-        <div class="logo">NAR-KAEL</div>
-        <div class="nav">
-            <a href="#">DISCORD</a>
-            <a href="#">WIKI</a>
-            <a href="#">SUPPORT</a>
-        </div>
-    </header>
-
-    <main>
-        <div class="hero">
-            <h1 class="glitch-title">NAR-KAEL</h1>
-            <p class="tagline">WORLD BEYOND THE VOID</p>
-            <div class="cta-box">
-                <button class="primary-btn">DOWNLOAD LAUNCHER</button>
-                <button class="secondary-btn">CREATE ACCOUNT</button>
-            </div>
-        </div>
-    </main>
-
-    <div class="footer-info">
-        <div class="status"><span class="dot"></span> SERVER ONLINE</div>
-        <div class="version">ALPHA 0.1.2</div>
+    <div class="toggle-link" onclick="toggleForm()">
+        <p id="toggle-text">Нет аккаунта? <span>Создать</span></p>
     </div>
+</div>
+
+<script>
+    let isLogin = true;
+
+    function toggleForm() {
+        isLogin = !isLogin;
+        document.getElementById('form-title').innerText = isLogin ? 'Войти в проект' : 'Регистрация';
+        document.getElementById('main-btn').innerText = isLogin ? 'Войти' : 'Создать аккаунт';
+        document.getElementById('toggle-text').innerHTML = isLogin ? 
+            'Нет аккаунта? <span>Создать</span>' : 'Уже есть аккаунт? <span>Войти</span>';
+    }
+
+    function handleAuth() {
+        const email = document.getElementById('email').value;
+        const pass = document.getElementById('password').value;
+
+        if(email && pass) {
+            alert(isLogin ? "Вход выполнен! (Пока это демо)" : "Аккаунт создан!");
+            // Здесь будет перенаправление на основную страницу сайта
+            // window.location.href = "dashboard.html"; 
+        } else {
+            alert("Заполни все поля!");
+        }
+    }
+</script>
+
 </body>
 </html>
