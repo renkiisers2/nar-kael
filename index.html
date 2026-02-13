@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +8,17 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
+        html, body {
             background: #000;
             color: white;
             font-family: 'Inter', sans-serif;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
         }
 
         /* Живой фон */
@@ -98,9 +102,10 @@
             color: #666;
             transition: 0.3s;
             position: relative;
+            padding-bottom: 5px;
         }
 
-        .nav-link:hover, .nav-link.active { 
+        .nav-link:hover { 
             color: #fff;
         }
 
@@ -117,6 +122,10 @@
 
         .nav-link:hover::after, .nav-link.active::after {
             width: 100%;
+        }
+
+        .nav-link.active {
+            color: #fff;
         }
 
         .nav-right {
@@ -179,19 +188,27 @@
         }
 
         /* Основной контент */
-        .content {
+        .pages-wrapper {
             flex: 1;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .content {
+            min-height: 100vh;
             padding: 40px 80px;
             opacity: 0;
             transform: translateY(20px);
             pointer-events: none;
             transition: all 0.5s ease-out;
+            display: none;
         }
 
         .content.active { 
             opacity: 1;
             transform: translateY(0);
             pointer-events: all;
+            display: block;
         }
 
         .main-card {
@@ -578,127 +595,121 @@
     <header>
         <div class="logo" onclick="showPage('home')">NAR-KAEL</div>
         <nav>
-            <div class="nav-link active" onclick="showPage('home')">HOME</div>
-            <div class="nav-link" onclick="showPage('library')">LIBRARY</div>
-            <div class="nav-link" onclick="showPage('marketplace')">MARKETPLACE</div>
-            <div class="nav-link" id="profileLink" onclick="showPage('profile')" style="display: none;">PROFILE</div>
-            <div class="nav-link" id="settingsLink" onclick="showPage('settings')" style="display: none;">SETTINGS</div>
+            <div class="nav-link active" data-page="home" onclick="showPage('home')">HOME</div>
+            <div class="nav-link" data-page="library" onclick="showPage('library')">LIBRARY</div>
+            <div class="nav-link" data-page="profile" id="profileLink" onclick="showPage('profile')" style="display: none;">PROFILE</div>
+            <div class="nav-link" data-page="settings" id="settingsLink" onclick="showPage('settings')" style="display: none;">SETTINGS</div>
         </nav>
         <div class="nav-right" id="authButtons">
-            <div class="login-btn" onclick="openModal('loginModal')">ВХОД</div>
-            <div class="reg-btn" onclick="openModal('regModal')">РЕГИСТРАЦИЯ</div>
+            <div class="login-btn" onclick="openModal('loginModal')">LOGIN</div>
+            <div class="reg-btn" onclick="openModal('regModal')">REGISTER</div>
         </div>
         <div class="nav-right" id="userPanel" style="display: none;">
             <div class="user-info" id="userEmail"></div>
-            <button class="logout-btn" onclick="logoutUser()">ВЫХОД</button>
+            <button class="logout-btn" onclick="logoutUser()">LOGOUT</button>
         </div>
     </header>
 
-    <!-- HOME PAGE -->
-    <div id="home" class="content active">
-        <div class="main-card">
-            <h1>EXPEDITION</h1>
-            <p style="color: #666; margin-bottom: 40px; font-size: 1.1rem;">Тёмное фэнтези выживание. Исследуй, сражайся, властвуй.</p>
-            <p style="color: #555; margin-bottom: 30px;">Погрузись в мир NAR-KAEL — средневекового королевства, охваченного мраком и магией. Выживай в опасных землях, сражайся с древними врагами и раскрывай тайны запретной магии.</p>
-            <button class="download-btn">СКАЧАТЬ ЛАУНЧЕР</button>
+    <div class="pages-wrapper">
+        <!-- HOME PAGE -->
+        <div id="home" class="content active">
+            <div class="main-card">
+                <h1>EXPEDITION</h1>
+                <p style="color: #666; margin-bottom: 40px; font-size: 1.1rem;">Dark fantasy survival. Explore, fight, rule.</p>
+                <p style="color: #555; margin-bottom: 30px;">Immerse yourself in the world of NAR-KAEL — a medieval kingdom engulfed in darkness and magic. Survive in dangerous lands, battle ancient enemies and uncover the secrets of forbidden magic.</p>
+                <button class="download-btn">DOWNLOAD LAUNCHER</button>
+            </div>
         </div>
-    </div>
 
-    <!-- LIBRARY PAGE -->
-    <div id="library" class="content">
-        <h2>МОЯ БИБЛИОТЕКА</h2>
-        <p style="color: #666; margin-bottom: 40px;">Твои установленные игры и проекты</p>
-        <div id="libraryContent" class="grid"></div>
-    </div>
-
-    <!-- MARKETPLACE PAGE -->
-    <div id="marketplace" class="content">
-        <h2>МАРКЕТПЛЕЙС</h2>
-        <p style="color: #666; margin-bottom: 40px;">Откройте для себя новые игры и расширения</p>
-        <div id="marketplaceContent" class="grid"></div>
-    </div>
-
-    <!-- PROFILE PAGE -->
-    <div id="profile" class="content">
-        <h2>МОЙ ПРОФИЛЬ</h2>
-        <div class="main-card">
-            <div style="text-align: left;">
-                <p style="margin-bottom: 15px;"><strong>Email:</strong> <span id="profileEmail"></span></p>
-                <p style="margin-bottom: 15px;"><strong>Дата регистрации:</strong> <span id="profileDate"></span></p>
-                <p style="margin-bottom: 15px;"><strong>Статус:</strong> <span style="color: #51cf66;">● Онлайн</span></p>
-            </div>
-            <h3 style="margin-top: 40px; font-size: 1.5rem; margin-bottom: 20px;">История покупок:</h3>
-            <table class="history-table">
-                <thead>
-                    <tr>
-                        <th>Игра</th>
-                        <th>Цена</th>
-                        <th>Дата</th>
-                        <th>Статус</th>
-                    </tr>
-                </thead>
-                <tbody id="purchaseHistory">
-                    <tr>
-                        <td colspan="4" style="text-align: center; color: #666;">Нет покупок</td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- LIBRARY PAGE -->
+        <div id="library" class="content">
+            <h2>MY LIBRARY</h2>
+            <p style="color: #666; margin-bottom: 40px;">Your installed games and projects</p>
+            <div id="libraryContent" class="grid"></div>
         </div>
-    </div>
 
-    <!-- SETTINGS PAGE -->
-    <div id="settings" class="content">
-        <h2>НАСТРОЙКИ</h2>
-        <div class="main-card" style="max-width: 600px;">
-            <h3 style="margin-bottom: 30px; font-size: 1.3rem; text-align: left;">АККАУНТ</h3>
-            
-            <div style="text-align: left; margin-bottom: 30px;">
-                <label style="display: block; margin-bottom: 10px; color: #aaa;">Email:</label>
-                <input type="email" id="settingsEmail" readonly style="background: #0a0a0a;">
+        <!-- PROFILE PAGE -->
+        <div id="profile" class="content">
+            <h2>MY PROFILE</h2>
+            <div class="main-card">
+                <div style="text-align: left;">
+                    <p style="margin-bottom: 15px;"><strong>Email:</strong> <span id="profileEmail"></span></p>
+                    <p style="margin-bottom: 15px;"><strong>Registration Date:</strong> <span id="profileDate"></span></p>
+                    <p style="margin-bottom: 15px;"><strong>Status:</strong> <span style="color: #51cf66;">● Online</span></p>
+                </div>
+                <h3 style="margin-top: 40px; font-size: 1.5rem; margin-bottom: 20px;">Purchase History:</h3>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Game</th>
+                            <th>Price</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="purchaseHistory">
+                        <tr>
+                            <td colspan="4" style="text-align: center; color: #666;">No purchases yet</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+        </div>
 
-            <div style="text-align: left; margin-bottom: 30px;">
-                <label style="display: block; margin-bottom: 10px; color: #aaa;">Новый пароль:</label>
-                <input type="password" id="newPassword" placeholder="Оставьте пусто, чтобы не менять">
-                <input type="password" id="confirmPassword" placeholder="Подтвердите пароль">
-                <button class="auth-submit" onclick="changePassword()" style="width: 100%; margin-top: 15px;">ИЗМЕНИТЬ ПАРОЛЬ</button>
+        <!-- SETTINGS PAGE -->
+        <div id="settings" class="content">
+            <h2>SETTINGS</h2>
+            <div class="main-card" style="max-width: 600px;">
+                <h3 style="margin-bottom: 30px; font-size: 1.3rem; text-align: left;">ACCOUNT</h3>
+                
+                <div style="text-align: left; margin-bottom: 30px;">
+                    <label style="display: block; margin-bottom: 10px; color: #aaa;">Email:</label>
+                    <input type="email" id="settingsEmail" readonly style="background: #0a0a0a;">
+                </div>
+
+                <div style="text-align: left; margin-bottom: 30px;">
+                    <label style="display: block; margin-bottom: 10px; color: #aaa;">New Password:</label>
+                    <input type="password" id="newPassword" placeholder="Leave blank to keep current password">
+                    <input type="password" id="confirmPassword" placeholder="Confirm password">
+                    <button class="auth-submit" onclick="changePassword()" style="width: 100%; margin-top: 15px;">CHANGE PASSWORD</button>
+                </div>
+
+                <h3 style="margin-bottom: 20px; font-size: 1.3rem; text-align: left; margin-top: 40px; color: #ff6b6b;">DANGER ZONE</h3>
+                
+                <button class="reg-btn" onclick="deleteAccount()" style="background: #ff4444; width: 100%; margin-top: 15px;">DELETE ACCOUNT</button>
             </div>
-
-            <h3 style="margin-bottom: 20px; font-size: 1.3rem; text-align: left; margin-top: 40px; color: #ff6b6b;">ОПАСНАЯ ЗОНА</h3>
-            
-            <button class="reg-btn" onclick="deleteAccount()" style="background: #ff4444; width: 100%; margin-top: 15px;">УДАЛИТЬ АККАУНТ</button>
         </div>
     </div>
 
     <!-- МОДАЛИ АВТОРИЗАЦИИ -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <h2>ВХОД</h2>
+            <h2>LOGIN</h2>
             <div class="error-msg" id="loginError"></div>
             <div class="success-msg" id="loginSuccess"></div>
             <input type="email" id="loginEmail" placeholder="Email">
-            <input type="password" id="loginPass" placeholder="Пароль">
+            <input type="password" id="loginPass" placeholder="Password">
             <button class="auth-submit" id="loginSubmit" onclick="login()">
-                <span id="loginButtonText">ВОЙТИ</span>
+                <span id="loginButtonText">SIGN IN</span>
                 <div class="loader" id="loginLoader"></div>
             </button>
-            <span class="close-btn" onclick="closeModal('loginModal')">ОТМЕНА</span>
+            <span class="close-btn" onclick="closeModal('loginModal')">CANCEL</span>
         </div>
     </div>
 
     <div id="regModal" class="modal">
         <div class="modal-content">
-            <h2>РЕГИСТРАЦИЯ</h2>
+            <h2>REGISTER</h2>
             <div class="error-msg" id="regError"></div>
             <div class="success-msg" id="regSuccess"></div>
             <input type="email" id="regEmail" placeholder="Email">
-            <input type="password" id="regPass" placeholder="Пароль (мин. 6 символов)">
-            <input type="password" id="regPassConfirm" placeholder="Подтвердите пароль">
+            <input type="password" id="regPass" placeholder="Password (min. 6 characters)">
+            <input type="password" id="regPassConfirm" placeholder="Confirm password">
             <button class="auth-submit" id="regSubmit" onclick="register()">
-                <span id="regButtonText">СОЗДАТЬ АККАУНТ</span>
+                <span id="regButtonText">CREATE ACCOUNT</span>
                 <div class="loader" id="regLoader"></div>
             </button>
-            <span class="close-btn" onclick="closeModal('regModal')">ОТМЕНА</span>
+            <span class="close-btn" onclick="closeModal('regModal')">CANCEL</span>
         </div>
     </div>
 
@@ -742,7 +753,7 @@
                 document.getElementById('userEmail').textContent = user.email;
                 document.getElementById('settingsEmail').value = user.email;
                 document.getElementById('profileEmail').textContent = user.email;
-                document.getElementById('profileDate').textContent = new Date(user.metadata.creationTime).toLocaleDateString('ru-RU');
+                document.getElementById('profileDate').textContent = new Date(user.metadata.creationTime).toLocaleDateString('en-US');
             } else {
                 // Пользователь не залогинен
                 document.getElementById('authButtons').style.display = 'flex';
@@ -767,17 +778,17 @@
             successEl.classList.remove('show');
 
             if (!email || !pass || !passConfirm) {
-                showError(errorEl, 'Заполните все поля');
+                showError(errorEl, 'Fill in all fields');
                 return;
             }
 
             if (pass !== passConfirm) {
-                showError(errorEl, 'Пароли не совпадают');
+                showError(errorEl, 'Passwords do not match');
                 return;
             }
 
             if (pass.length < 6) {
-                showError(errorEl, 'Пароль должен быть не менее 6 символов');
+                showError(errorEl, 'Password must be at least 6 characters');
                 return;
             }
 
@@ -786,23 +797,22 @@
 
             try {
                 await createUserWithEmailAndPassword(auth, email, pass);
-                successEl.textContent = '✓ Успешно! Теперь войдите в аккаунт.';
+                successEl.textContent = '✓ Successfully registered! You are now logged in.';
                 successEl.classList.add('show');
                 document.getElementById('regEmail').value = '';
                 document.getElementById('regPass').value = '';
                 document.getElementById('regPassConfirm').value = '';
                 setTimeout(() => {
                     closeModal('regModal');
-                    openModal('loginModal');
-                }, 2000);
+                }, 1500);
             } catch (e) {
-                let errorMsg = 'Ошибка регистрации';
+                let errorMsg = 'Registration error';
                 if (e.code === 'auth/email-already-in-use') {
-                    errorMsg = 'Этот email уже зарегистрирован';
+                    errorMsg = 'This email is already registered';
                 } else if (e.code === 'auth/invalid-email') {
-                    errorMsg = 'Некорректный email';
+                    errorMsg = 'Invalid email';
                 } else if (e.code === 'auth/weak-password') {
-                    errorMsg = 'Слишком слабый пароль';
+                    errorMsg = 'Weak password';
                 } else {
                     errorMsg = e.message;
                 }
@@ -826,7 +836,7 @@
             successEl.classList.remove('show');
 
             if (!email || !pass) {
-                showError(errorEl, 'Заполните email и пароль');
+                showError(errorEl, 'Fill in email and password');
                 return;
             }
 
@@ -835,7 +845,7 @@
 
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
-                successEl.textContent = '✓ Добро пожаловать!';
+                successEl.textContent = '✓ Welcome!';
                 successEl.classList.add('show');
                 document.getElementById('loginEmail').value = '';
                 document.getElementById('loginPass').value = '';
@@ -843,13 +853,13 @@
                     closeModal('loginModal');
                 }, 1000);
             } catch (e) {
-                let errorMsg = 'Ошибка входа';
+                let errorMsg = 'Login error';
                 if (e.code === 'auth/user-not-found') {
-                    errorMsg = 'Пользователь не найден';
+                    errorMsg = 'User not found';
                 } else if (e.code === 'auth/wrong-password') {
-                    errorMsg = 'Неверный пароль';
+                    errorMsg = 'Incorrect password';
                 } else if (e.code === 'auth/invalid-email') {
-                    errorMsg = 'Некорректный email';
+                    errorMsg = 'Invalid email';
                 } else {
                     errorMsg = e.message;
                 }
@@ -860,13 +870,13 @@
             }
         };
 
-        // ВЫХОД - ИСПРАВЛЕНО
+        // ВЫХОД
         window.logoutUser = async () => {
             try {
                 await signOut(auth);
-                console.log('Успешно вышли');
+                console.log('Successfully logged out');
             } catch (e) {
-                console.error('Ошибка выхода:', e);
+                console.error('Logout error:', e);
             }
         };
 
@@ -877,38 +887,38 @@
             const user = auth.currentUser;
 
             if (!newPass || !confirmPass) {
-                alert('Заполните оба поля');
+                alert('Fill in both fields');
                 return;
             }
 
             if (newPass !== confirmPass) {
-                alert('Пароли не совпадают');
+                alert('Passwords do not match');
                 return;
             }
 
             if (newPass.length < 6) {
-                alert('Пароль должен быть не менее 6 символов');
+                alert('Password must be at least 6 characters');
                 return;
             }
 
             try {
                 await updatePassword(user, newPass);
-                alert('✓ Пароль успешно изменён');
+                alert('✓ Password changed successfully');
                 document.getElementById('newPassword').value = '';
                 document.getElementById('confirmPassword').value = '';
             } catch (e) {
-                alert('Ошибка: ' + e.message);
+                alert('Error: ' + e.message);
             }
         };
 
         // УДАЛЕНИЕ АККАУНТА
         window.deleteAccount = async () => {
-            if (confirm('⚠️ Вы уверены? Это действие необратимо!')) {
+            if (confirm('⚠️ Are you sure? This action is irreversible!')) {
                 try {
                     await deleteUser(auth.currentUser);
-                    alert('✓ Аккаунт удалён');
+                    alert('✓ Account deleted');
                 } catch (e) {
-                    alert('Ошибка: ' + e.message);
+                    alert('Error: ' + e.message);
                 }
             }
         };
@@ -918,41 +928,10 @@
             element.classList.add('show');
         }
 
-        // Маркетплейс
-        window.loadMarketplace = () => {
-            const games = [
-                { name: 'NAR-KAEL: EXPEDITION', price: '499₽', desc: 'Главная игра' },
-                { name: 'DARK SOULS PACK', price: '399₽', desc: 'Набор скинов' },
-                { name: 'MAGIC SPELLS', price: '199₽', desc: 'DLC с заклинаниями' },
-                { name: 'WEAPONS COLLECTION', price: '299₽', desc: 'Оружейный арсенал' },
-                { name: 'CURSED ARMOR', price: '249₽', desc: 'Легендарная броня' },
-                { name: 'ANCIENT ARTIFACTS', price: '349₽', desc: 'Предметы силы' },
-            ];
-
-            const marketplace = document.getElementById('marketplaceContent');
-            marketplace.innerHTML = '';
-            games.forEach((game, index) => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.style.animationDelay = (index * 0.1) + 's';
-                card.innerHTML = `
-                    <div class="card-title">${game.name}</div>
-                    <p style="color: #666; font-size: 0.9rem;">${game.desc}</p>
-                    <div class="card-price">${game.price}</div>
-                    <button class="card-btn" onclick="buyGame('${game.name}')">КУПИТЬ</button>
-                `;
-                marketplace.appendChild(card);
-            });
-        };
-
         // Библиотека
         window.loadLibrary = () => {
             const library = document.getElementById('libraryContent');
-            library.innerHTML = '<p style="color: #666; text-align: center; padding: 40px;">Пока нет установленных игр</p>';
-        };
-
-        window.buyGame = (name) => {
-            alert(`Благодарим за интерес к "${name}"!\n\nОплата реализуется отдельно через платежный шлюз.`);
+            library.innerHTML = '<p style="color: #666; text-align: center; padding: 40px; grid-column: 1/-1;">No installed games yet</p>';
         };
     </script>
 
@@ -970,15 +949,27 @@
         }
 
         function showPage(page) {
+            // Скрываем все страницы
             document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
-            document.getElementById(page).classList.add('active');
+            
+            // Показываем нужную страницу
+            const pageEl = document.getElementById(page);
+            if (pageEl) {
+                pageEl.classList.add('active');
+                // Скролл в верх
+                document.querySelector('.pages-wrapper').scrollTop = 0;
+            }
 
-            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
-            event.target?.classList.add('active');
+            // Обновляем активный nav-link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === page) {
+                    link.classList.add('active');
+                }
+            });
 
-            if (page === 'marketplace') {
-                window.loadMarketplace();
-            } else if (page === 'library') {
+            // Загружаем контент
+            if (page === 'library') {
                 window.loadLibrary();
             }
         }
