@@ -2,125 +2,73 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация в проекте</title>
+    <title>Вход в проект</title>
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #121212;
-            color: #e0e0e0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .auth-card {
-            background: #1e1e1e;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-            width: 350px;
-            text-align: center;
-            border: 1px solid #333;
-        }
-        h2 { margin-bottom: 20px; color: #fff; }
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 8px;
-            border: 1px solid #444;
-            background: #2a2a2a;
-            color: #fff;
-            box-sizing: border-box;
-            outline: none;
-        }
-        input:focus { border-color: #007bff; }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            border: none;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 15px;
-            transition: 0.3s;
-        }
-        button:hover { background-color: #0056b3; }
-        .toggle-link { margin-top: 20px; font-size: 0.85rem; color: #888; cursor: pointer; }
-        .toggle-link span { color: #007bff; text-decoration: underline; }
-        
-        /* Скрываем лишние поля при входе */
-        .reg-only { display: none; }
+        body { background: #121212; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: #1e1e1e; padding: 30px; border-radius: 12px; width: 320px; text-align: center; border: 1px solid #333; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #444; background: #2a2a2a; color: white; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #007bff; border: none; color: white; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        button:hover { background: #0056b3; }
+        #protected-content { display: none; }
     </style>
 </head>
 <body>
 
-<div class="auth-card">
-    <h2 id="form-title">Войти</h2>
-    
-    <input type="text" id="username" class="reg-only" placeholder="Ник игрока">
-    
-    <input type="email" id="email" placeholder="Электронная почта">
-    <input type="password" id="password" placeholder="Пароль">
-    
-    <input type="password" id="confirm-password" class="reg-only" placeholder="Подтвердите пароль">
-    
-    <button onclick="handleSubmit()" id="main-btn">Войти</button>
-    
-    <div class="toggle-link" onclick="toggleMode()">
-        <p id="toggle-text">Еще нет аккаунта? <span>Создать</span></p>
-    </div>
+<div class="card" id="auth-screen">
+    <h2 id="form-title">Регистрация</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="pass" placeholder="Пароль">
+    <button onclick="handleAuth()" id="btn-text">Создать аккаунт</button>
+    <p style="font-size: 12px; color: #888; cursor: pointer;" onclick="toggle()">Уже есть аккаунт? Войти</p>
 </div>
 
-<script>
-    let isRegistration = false;
+<div class="card" id="protected-content">
+    <h2>Доступ разрешен</h2>
+    <p>Вы успешно вошли в систему!</p>
+    <button onclick="location.reload()">Выйти</button>
+</div>
 
-    function toggleMode() {
-        isRegistration = !isRegistration;
-        const regFields = document.querySelectorAll('.reg-only');
-        
-        // Показываем или скрываем поля
-        regFields.forEach(field => {
-            field.style.display = isRegistration ? 'block' : 'none';
-        });
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // Меняем тексты
-        document.getElementById('form-title').innerText = isRegistration ? 'Регистрация' : 'Войти';
-        document.getElementById('main-btn').innerText = isRegistration ? 'Зарегистрироваться' : 'Войти';
-        document.getElementById('toggle-text').innerHTML = isRegistration ? 
-            'Уже есть аккаунт? <span>Войти</span>' : 'Еще нет аккаунта? <span>Создать</span>';
+  // ВСТАВЬ СВОЙ КОНФИГ ТУТ
+  const firebaseConfig = {
+    apiKey: "AIzaSyD9gVVWWwnrPg6GNN1Q&I-J6c8e0u-iMee8",
+    authDomain: "nar-kael.firebaseapp.com",
+    projectId: "nar-kael",
+    storageBucket: "nar-kael.firebasestorage.app",
+    messagingSenderId: "716148546557",
+    appId: "1:716148546557:web:1c8ab4d9758c4b8cded794"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  let isReg = true;
+  window.toggle = () => {
+      isReg = !isReg;
+      document.getElementById('form-title').innerText = isReg ? "Регистрация" : "Вход";
+      document.getElementById('btn-text').innerText = isReg ? "Создать аккаунт" : "Войти";
+  };
+
+  window.handleAuth = async () => {
+    const email = document.getElementById('email').value;
+    const pass = document.getElementById('pass').value;
+
+    try {
+      if (isReg) {
+        await createUserWithEmailAndPassword(auth, email, pass);
+        alert("Аккаунт создан!");
+      } else {
+        await signInWithEmailAndPassword(auth, email, pass);
+      }
+      document.getElementById('auth-screen').style.display = 'none';
+      document.getElementById('protected-content').style.display = 'block';
+    } catch (e) {
+      alert("Ошибка: " + e.message);
     }
-
-    function handleSubmit() {
-        const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
-        const pass = document.getElementById('password').value;
-        const confirmPass = document.getElementById('confirm-password').value;
-
-        if (isRegistration) {
-            // Проверки для регистрации
-            if (!username || !email || !pass || !confirmPass) {
-                alert("Пожалуйста, заполни все поля!");
-                return;
-            }
-            if (pass !== confirmPass) {
-                alert("Пароли не совпадают!");
-                return;
-            }
-            alert(`Успех! Игрок ${username}, ваш аккаунт создан (демо).`);
-        } else {
-            // Логика входа
-            if (!email || !pass) {
-                alert("Введите почту и пароль!");
-                return;
-            }
-            alert("Вы вошли в систему!");
-        }
-    }
+  };
 </script>
 
 </body>
