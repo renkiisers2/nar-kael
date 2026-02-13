@@ -1,50 +1,22 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Вход в проект</title>
-    <style>
-        body { background: #121212; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .card { background: #1e1e1e; padding: 30px; border-radius: 12px; width: 320px; text-align: center; border: 1px solid #333; }
-        input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #444; background: #2a2a2a; color: white; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #007bff; border: none; color: white; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; }
-        button:hover { background: #0056b3; }
-        #protected-content { display: none; }
-    </style>
-</head>
-<body>
-
-<div class="card" id="auth-screen">
-    <h2 id="form-title">Регистрация</h2>
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="pass" placeholder="Пароль">
-    <button onclick="handleAuth()" id="btn-text">Создать аккаунт</button>
-    <p style="font-size: 12px; color: #888; cursor: pointer;" onclick="toggle()">Уже есть аккаунт? Войти</p>
-</div>
-
-<div class="card" id="protected-content">
-    <h2>Доступ разрешен</h2>
-    <p>Вы успешно вошли в систему!</p>
-    <button onclick="location.reload()">Выйти</button>
-</div>
-
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-  // ВСТАВЬ СВОЙ КОНФИГ ТУТ
+  // Твой исправленный конфиг
   const firebaseConfig = {
-    apiKey: "AIzaSyD9gVVWWwnrPg6GNN1Q&I-J6c8e0u-iMee8",
+    apiKey: "AIzaSyD9gVWWwnrPg6GNN1Q6I-J6cBeOu-iMee0",
     authDomain: "nar-kael.firebaseapp.com",
     projectId: "nar-kael",
     storageBucket: "nar-kael.firebasestorage.app",
     messagingSenderId: "716148546557",
-    appId: "1:716148546557:web:1c8ab4d9758c4b8cded794"
+    appId: "1:716148546557:web:1c8ab4d9758c4b0cded794",
+    measurementId: "G-1DJ3MBEFHV"
   };
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
+  // Логика переключения Вход/Регистрация
   let isReg = true;
   window.toggle = () => {
       isReg = !isReg;
@@ -56,20 +28,21 @@
     const email = document.getElementById('email').value;
     const pass = document.getElementById('pass').value;
 
+    if (!email || !pass) return alert("Заполни поля!");
+
     try {
       if (isReg) {
         await createUserWithEmailAndPassword(auth, email, pass);
-        alert("Аккаунт создан!");
+        alert("Аккаунт успешно создан!");
       } else {
         await signInWithEmailAndPassword(auth, email, pass);
+        alert("Вы вошли!");
       }
       document.getElementById('auth-screen').style.display = 'none';
       document.getElementById('protected-content').style.display = 'block';
     } catch (e) {
+      console.error(e);
       alert("Ошибка: " + e.message);
     }
   };
 </script>
-
-</body>
-</html>
