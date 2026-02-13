@@ -4,32 +4,178 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NAR-KAEL | THE VOID</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;800&family=Space+Grotesk:wght@300;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #ffffff;
+            --bg: #000000;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Анимированный фон */
+        .bg-gradient {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #111 0%, #000 100%);
+            z-index: -2;
+        }
+
+        .glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 40vw; height: 40vw;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            filter: blur(60px);
+            z-index: -1;
+            animation: pulse 8s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        /* Навигация */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 60px;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .login-link {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .login-link:hover { color: white; }
+
+        .btn-reg {
+            background: white;
+            color: black;
+            padding: 12px 30px;
+            border-radius: 50px; /* Закругленные края */
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .btn-reg:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+
+        /* Центр страницы */
+        .hero {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-bottom: 10vh;
+        }
+
+        .hero-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 60px;
+            border-radius: 40px; /* Закругленные края карточки */
+            max-width: 800px;
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 5rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            line-height: 0.9;
+        }
+
+        p {
+            color: #aaa;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 500px;
+            line-height: 1.6;
+        }
+
+        .download-btn {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 20px 50px;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.4s;
+        }
+
+        .download-btn:hover {
+            background: white;
+            color: black;
+        }
+
+        .status {
+            margin-top: 30px;
+            font-size: 0.7rem;
+            color: #444;
+            letter-spacing: 3px;
+        }
+    </style>
 </head>
 <body>
-    <div class="blob-portal"></div>
-    <div class="stars"></div>
+    <div class="bg-gradient"></div>
+    <div class="glow"></div>
 
-    <header class="header">
-        <div class="logo">NAR<span>KAEL</span></div>
-        <div class="auth-group">
-            <a href="#" class="nav-link">Вход</a>
-            <a href="#" class="btn-register">Регистрация</a>
+    <header>
+        <div class="logo">NAR-KAEL</div>
+        <div class="auth-buttons">
+            <a href="#" class="login-link">ВХОД</a>
+            <a href="#" class="btn-reg">РЕГИСТРАЦИЯ</a>
         </div>
     </header>
 
-    <main class="hero-section">
-        <div class="glass-card">
-            <h1 class="main-title">EXPEDITION</h1>
-            <p class="description">Погрузись в мир, где тени имеют плоть. Бесплатное выживание в сеттинге темного фэнтези.</p>
-            <div class="main-actions">
-                <button class="btn-primary">СКАЧАТЬ ЛАУНЧЕР</button>
-                <div class="version-tag">Alpha 0.1.2 — Online</div>
-            </div>
+    <main class="hero">
+        <div class="hero-card">
+            <h1>EXPEDITION</h1>
+            <p>Испытай свои силы в самом мрачном мире этого года. Никаких донатов, только скилл.</p>
+            <button class="download-btn">СКАЧАТЬ ЛАУНЧЕР</button>
+            <div class="status">SERVER: ONLINE | V. 0.1.2</div>
         </div>
     </main>
-
-    <div class="bg-overlay"></div>
 </body>
 </html>
