@@ -1,0 +1,35 @@
+body {
+    background-color: #000000; /* Тот самый черный */
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container { text-align: center; }
+
+h1 { font-size: 3rem; letter-spacing: 5px; }
+.highlight { color: #888; } /* Серый акцент */
+
+.main-box {
+    margin: 40px 0;
+    padding: 50px;
+    border: 1px solid #333; /* Тонкая серая рамка */
+}
+
+.download-btn {
+    background: white;
+    color: black;
+    border: none;
+    padding: 15px 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.download-btn:hover { background: #ccc; }
+
+.stats { color: #555; font-size: 0.8rem; }
