@@ -1,48 +1,35 @@
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAR-KAEL | THE VOID</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;800&family=Space+Grotesk:wght@300;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="blob-portal"></div>
+    <div class="stars"></div>
 
-  // Твой исправленный конфиг
-  const firebaseConfig = {
-    apiKey: "AIzaSyD9gVWWwnrPg6GNN1Q6I-J6cBeOu-iMee0",
-    authDomain: "nar-kael.firebaseapp.com",
-    projectId: "nar-kael",
-    storageBucket: "nar-kael.firebasestorage.app",
-    messagingSenderId: "716148546557",
-    appId: "1:716148546557:web:1c8ab4d9758c4b0cded794",
-    measurementId: "G-1DJ3MBEFHV"
-  };
+    <header class="header">
+        <div class="logo">NAR<span>KAEL</span></div>
+        <div class="auth-group">
+            <a href="#" class="nav-link">Вход</a>
+            <a href="#" class="btn-register">Регистрация</a>
+        </div>
+    </header>
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+    <main class="hero-section">
+        <div class="glass-card">
+            <h1 class="main-title">EXPEDITION</h1>
+            <p class="description">Погрузись в мир, где тени имеют плоть. Бесплатное выживание в сеттинге темного фэнтези.</p>
+            <div class="main-actions">
+                <button class="btn-primary">СКАЧАТЬ ЛАУНЧЕР</button>
+                <div class="version-tag">Alpha 0.1.2 — Online</div>
+            </div>
+        </div>
+    </main>
 
-  // Логика переключения Вход/Регистрация
-  let isReg = true;
-  window.toggle = () => {
-      isReg = !isReg;
-      document.getElementById('form-title').innerText = isReg ? "Регистрация" : "Вход";
-      document.getElementById('btn-text').innerText = isReg ? "Создать аккаунт" : "Войти";
-  };
-
-  window.handleAuth = async () => {
-    const email = document.getElementById('email').value;
-    const pass = document.getElementById('pass').value;
-
-    if (!email || !pass) return alert("Заполни поля!");
-
-    try {
-      if (isReg) {
-        await createUserWithEmailAndPassword(auth, email, pass);
-        alert("Аккаунт успешно создан!");
-      } else {
-        await signInWithEmailAndPassword(auth, email, pass);
-        alert("Вы вошли!");
-      }
-      document.getElementById('auth-screen').style.display = 'none';
-      document.getElementById('protected-content').style.display = 'block';
-    } catch (e) {
-      console.error(e);
-      alert("Ошибка: " + e.message);
-    }
-  };
-</script>
+    <div class="bg-overlay"></div>
+</body>
+</html>
