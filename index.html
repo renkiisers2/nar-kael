@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NAR-KAEL | THE VOID</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Google reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -273,8 +275,19 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: 2rem;
             color: #888;
-            margin-bottom: 80px;
+            margin-bottom: 50px;
             letter-spacing: 3px;
+        }
+
+        .early-access-badge {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: #ffd700;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
         }
 
         .play-btn {
@@ -358,6 +371,111 @@
         .download-btn.secondary:hover {
             border-color: #fff;
             background: rgba(255,255,255,0.05);
+        }
+
+        /* ГАЛЕРЕЯ */
+        .gallery-section {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 */
+            margin-bottom: 60px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .screenshot-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .screenshot-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ОБЗОР */
+        .overview-section {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .overview-block {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        .overview-block h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+
+        .overview-block p {
+            color: #aaa;
+            line-height: 1.8;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #aaa;
+            line-height: 1.6;
+        }
+
+        .features-list li:before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #fff;
+            font-size: 1.2rem;
         }
 
         h2 {
@@ -579,33 +697,11 @@
 
         .forgot-password:hover { color: #fff; }
 
-        /* Сетка товаров */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .card:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 15px 30px rgba(255,255,255,0.04);
-        }
-
-        .card-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 10px;
+        /* reCAPTCHA стили */
+        .g-recaptcha {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
         }
 
         /* Таблица истории */
@@ -694,7 +790,7 @@
             }
 
             .hero-title { font-size: 3rem; }
-            .hero-subtitle { font-size: 1.3rem; margin-bottom: 60px; }
+            .hero-subtitle { font-size: 1.3rem; margin-bottom: 30px; }
             h2 { font-size: 2rem; }
             
             .main-card { padding: 40px; }
@@ -707,7 +803,7 @@
                 font-size: 1rem;
             }
 
-            .download-option {
+            .download-option, .overview-block {
                 padding: 30px 20px;
             }
 
@@ -715,6 +811,10 @@
                 right: 20px;
                 left: 20px;
                 max-width: none;
+            }
+
+            .screenshots-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -727,8 +827,9 @@
         <div class="logo" onclick="showPage('home')">NAR-KAEL</div>
         <nav>
             <div class="nav-link active" data-page="home" onclick="showPage('home')">ГЛАВНАЯ</div>
+            <div class="nav-link" data-page="overview" onclick="showPage('overview')">ОБЗОР</div>
+            <div class="nav-link" data-page="gallery" onclick="showPage('gallery')">ГАЛЕРЕЯ</div>
             <div class="nav-link" data-page="download" onclick="showPage('download')">СКАЧАТЬ</div>
-            <div class="nav-link" data-page="library" onclick="showPage('library')">БИБЛИОТЕКА</div>
             <div class="nav-link" data-page="profile" id="profileLink" onclick="showPage('profile')" style="display: none;">ПРОФИЛЬ</div>
             <div class="nav-link" data-page="settings" id="settingsLink" onclick="showPage('settings')" style="display: none;">НАСТРОЙКИ</div>
         </nav>
@@ -748,7 +849,120 @@
             <div class="hero-section">
                 <h1 class="hero-title">EXPEDITION:</h1>
                 <h2 class="hero-subtitle">NAR-KAEL</h2>
-                <button class="play-btn" onclick="showPage('download')">ИГРАТЬ</button>
+                <div class="early-access-badge">⚠️ РАННИЙ ДОСТУП</div>
+                <button class="play-btn" onclick="showPage('download')">ПОПРОБОВАТЬ</button>
+                <p style="color: #666; margin-top: 30px; font-size: 0.9rem; max-width: 600px;">
+                    Игра находится в раннем доступе. Возможны технические неполадки и баги. Спасибо за понимание!
+                </p>
+            </div>
+        </div>
+
+        <!-- OVERVIEW PAGE -->
+        <div id="overview" class="content">
+            <div class="overview-section">
+                <h2>ОБЗОР ИГРЫ</h2>
+                
+                <div class="overview-block">
+                    <h3>О NAR-KAEL: Expedition</h3>
+                    <p>
+                        NAR-KAEL — это атмосферная игра в жанре тёмного фэнтези выживания, которая погружает вас в мрачный средневековый мир, 
+                        охваченный древним проклятием. Исследуйте опасные земли, сражайтесь с ужасающими врагами и раскрывайте тайны запретной магии.
+                    </p>
+                    <p>
+                        Каждое решение имеет последствия. Ваш выбор определит судьбу королевства и его жителей. Выживайте любой ценой в мире, 
+                        где смерть поджидает на каждом шагу.
+                    </p>
+                </div>
+
+                <div class="overview-block">
+                    <h3>Основные Особенности</h3>
+                    <ul class="features-list">
+                        <li>Открытый мир с динамической погодой и сменой дня и ночи</li>
+                        <li>Глубокая система крафта и развития персонажа</li>
+                        <li>Сложные боссы с уникальными механиками</li>
+                        <li>Нелинейный сюжет с множеством концовок</li>
+                        <li>Система магии с запретными заклинаниями</li>
+                        <li>Реалистичная система выживания (голод, жажда, усталость)</li>
+                        <li>Построение базы и укреплений</li>
+                        <li>Торговля и взаимодействие с NPC</li>
+                    </ul>
+                </div>
+
+                <div class="overview-block">
+                    <h3>Системные Требования</h3>
+                    <p><strong>Минимальные:</strong></p>
+                    <ul class="features-list">
+                        <li>ОС: Windows 10 64-bit</li>
+                        <li>Процессор: Intel Core i5-6600K / AMD Ryzen 5 1600</li>
+                        <li>Оперативная память: 8 GB RAM</li>
+                        <li>Видеокарта: NVIDIA GTX 1060 / AMD RX 580</li>
+                        <li>DirectX: Версии 11</li>
+                        <li>Место на диске: 50 GB</li>
+                    </ul>
+                    <p style="margin-top: 20px;"><strong>Рекомендуемые:</strong></p>
+                    <ul class="features-list">
+                        <li>ОС: Windows 10/11 64-bit</li>
+                        <li>Процессор: Intel Core i7-8700K / AMD Ryzen 7 3700X</li>
+                        <li>Оперативная память: 16 GB RAM</li>
+                        <li>Видеокарта: NVIDIA RTX 3060 / AMD RX 6700 XT</li>
+                        <li>DirectX: Версии 11</li>
+                        <li>Место на диске: 50 GB SSD</li>
+                    </ul>
+                </div>
+
+                <div class="overview-block">
+                    <h3>Статус Разработки</h3>
+                    <p>
+                        Игра находится в стадии раннего доступа. Мы активно работаем над исправлением багов, добавлением нового контента 
+                        и улучшением игрового опыта на основе отзывов сообщества.
+                    </p>
+                    <p>
+                        Ваша поддержка и обратная связь помогают нам создавать лучшую игру. Спасибо, что вы с нами!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- GALLERY PAGE -->
+        <div id="gallery" class="content">
+            <div class="gallery-section">
+                <h2>ГАЛЕРЕЯ</h2>
+                
+                <!-- Трейлер -->
+                <h3 style="color: #888; margin-bottom: 20px; font-size: 1.2rem;">ОФИЦИАЛЬНЫЙ ТРЕЙЛЕР</h3>
+                <div class="video-container">
+                    <!-- Замените VIDEO_ID на ID вашего YouTube видео -->
+                    <iframe 
+                        src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <!-- Скриншоты -->
+                <h3 style="color: #888; margin-bottom: 20px; font-size: 1.2rem; margin-top: 40px;">СКРИНШОТЫ</h3>
+                <div class="screenshots-grid">
+                    <!-- Замените ссылки на реальные скриншоты -->
+                    <div class="screenshot-item">
+                        <img src="https://via.placeholder.com/600x400/1a1a1a/ffffff?text=Screenshot+1" alt="Screenshot 1">
+                    </div>
+                    <div class="screenshot-item">
+                        <img src="https://via.placeholder.com/600x400/1a1a1a/ffffff?text=Screenshot+2" alt="Screenshot 2">
+                    </div>
+                    <div class="screenshot-item">
+                        <img src="https://via.placeholder.com/600x400/1a1a1a/ffffff?text=Screenshot+3" alt="Screenshot 3">
+                    </div>
+                    <div class="screenshot-item">
+                        <img src="https://via.placeholder.com/600x400/1a1a1a/ffffff?text=Screenshot+4" alt="Screenshot 4">
+                    </div>
+                    <div class="screenshot-item">
+                        <img src="https://via.placeholder.com/600x400/1a1a1a/ffffff?text=Screenshot+5" alt="Screenshot 5">
+                    </div>
+                    <div class="screenshot-item">
+                        <img src="https://via.placeholder.com/600x400/1a1a1a/ffffff?text=Screenshot+6" alt="Screenshot 6">
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -773,13 +987,6 @@
                     Системные требования: Windows 10/11, 8GB RAM, DirectX 11
                 </p>
             </div>
-        </div>
-
-        <!-- LIBRARY PAGE -->
-        <div id="library" class="content">
-            <h2>МОЯ БИБЛИОТЕКА</h2>
-            <p style="color: #666; margin-bottom: 40px;">Твои установленные игры и проекты</p>
-            <div id="libraryContent" class="grid"></div>
         </div>
 
         <!-- PROFILE PAGE -->
@@ -917,6 +1124,8 @@
                     </svg>
                 </span>
             </div>
+            <!-- Google reCAPTCHA -->
+            <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
             <button class="auth-submit" id="regSubmit" onclick="register()">
                 <span id="regButtonText">СОЗДАТЬ АККАУНТ</span>
                 <div class="loader" id="regLoader"></div>
@@ -1084,6 +1293,13 @@
                 return;
             }
 
+            // Проверка reCAPTCHA
+            const recaptchaResponse = grecaptcha.getResponse();
+            if (!recaptchaResponse) {
+                showError(errorEl, 'Пожалуйста, подтвердите что вы не робот');
+                return;
+            }
+
             if (nickname.length < 3 || nickname.length > 20) {
                 showError(errorEl, 'Никнейм должен быть от 3 до 20 символов');
                 return;
@@ -1113,6 +1329,7 @@
                     showError(errorEl, 'Этот никнейм уже занят');
                     submitBtn.disabled = false;
                     loader.classList.remove('show');
+                    grecaptcha.reset();
                     return;
                 }
 
@@ -1141,6 +1358,7 @@
                 setTimeout(() => {
                     closeModal('regModal');
                     showNotification('Добро пожаловать!', 'Ваш аккаунт успешно создан', 'success');
+                    grecaptcha.reset();
                 }, 1500);
             } catch (e) {
                 let errorMsg = 'Ошибка регистрации';
@@ -1152,6 +1370,7 @@
                     errorMsg = 'Слишком слабый пароль';
                 }
                 showError(errorEl, errorMsg);
+                grecaptcha.reset();
             } finally {
                 submitBtn.disabled = false;
                 loader.classList.remove('show');
@@ -1329,11 +1548,9 @@
             }
 
             try {
-                // Реаутентификация
                 const credential = EmailAuthProvider.credential(user.email, password);
                 await reauthenticateWithCredential(user, credential);
 
-                // Удаляем данные из Firestore
                 const userDoc = await getDoc(doc(db, "users", user.uid));
                 if (userDoc.exists()) {
                     const nickname = userDoc.data().nickname;
@@ -1341,7 +1558,6 @@
                     await deleteDoc(doc(db, "users", user.uid));
                 }
 
-                // Удаляем аккаунт
                 await deleteUser(user);
                 
                 closeModal('deleteAccountModal');
@@ -1359,11 +1575,6 @@
             element.textContent = '✗ ' + message;
             element.classList.add('show');
         }
-
-        window.loadLibrary = () => {
-            const library = document.getElementById('libraryContent');
-            library.innerHTML = '<p style="color: #666; text-align: center; padding: 40px; grid-column: 1/-1;">Нет установленных игр</p>';
-        };
     </script>
 
     <script>
@@ -1373,7 +1584,6 @@
             
             if (input.type === 'password') {
                 input.type = 'text';
-                // Зачеркнутый глаз
                 svg.innerHTML = `
                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                     <circle cx="12" cy="12" r="3"></circle>
@@ -1381,7 +1591,6 @@
                 `;
             } else {
                 input.type = 'password';
-                // Обычный глаз
                 svg.innerHTML = `
                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                     <circle cx="12" cy="12" r="3"></circle>
@@ -1420,18 +1629,18 @@
                     link.classList.add('active');
                 }
             });
-
-            if (page === 'library') {
-                window.loadLibrary();
-            }
         }
 
         function downloadLauncher() {
-            showNotification('Скачивание', 'Функционал в разработке', 'warning');
+            showNotification('Скачивание', 'Начинается загрузка лаунчера...', 'success');
+            // Здесь будет реальная ссылка на скачивание
+            // window.location.href = 'https://yourdomain.com/downloads/NarKael_Launcher.exe';
         }
 
         function downloadManual() {
-            showNotification('Скачивание', 'Функционал в разработке', 'warning');
+            showNotification('Скачивание', 'Начинается загрузка архива...', 'success');
+            // Здесь будет реальная ссылка на скачивание
+            // window.location.href = 'https://yourdomain.com/downloads/NarKael_Game.zip';
         }
 
         document.querySelectorAll('.modal').forEach(modal => {
