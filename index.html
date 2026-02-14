@@ -1634,17 +1634,29 @@
             });
         }
 
-        function downloadLauncher() {
-            showNotification('Скачивание', 'Начинается загрузка лаунчера...', 'success');
-            // Здесь будет реальная ссылка на скачивание
-            // window.location.href = 'https://yourdomain.com/downloads/NarKael_Launcher.exe';
-        }
+function downloadLauncher() {
+    showNotification('Скачивание', 'Начинается загрузка лаунчера...', 'success');
+    
+    // Создаём ссылку для скачивания
+    const link = document.createElement('a');
+    link.href = 'downloads/NarKael_Launcher.txt'; // Потом поменяешь на .exe
+    link.download = 'NarKael_Launcher.txt'; // Имя файла при скачивании
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 
-        function downloadManual() {
-            showNotification('Скачивание', 'Начинается загрузка архива...', 'success');
-            // Здесь будет реальная ссылка на скачивание
-            // window.location.href = 'https://yourdomain.com/downloads/NarKael_Game.zip';
-        }
+function downloadManual() {
+    showNotification('Скачивание', 'Начинается загрузка архива...', 'success');
+    
+    // Создаём ссылку для скачивания
+    const link = document.createElement('a');
+    link.href = 'downloads/NarKael_Game.txt'; // Потом поменяешь на .zip
+    link.download = 'NarKael_Game.txt'; // Имя файла при скачивании
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', (e) => {
