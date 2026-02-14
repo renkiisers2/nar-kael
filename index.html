@@ -244,7 +244,7 @@
             justify-content: center;
             min-height: calc(100vh - 150px);
             text-align: center;
-            padding: 40px 20px;
+            padding: 60px 20px 40px;
             animation: fadeIn 0.6s ease-out;
         }
 
@@ -263,7 +263,7 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: 2rem;
             color: #888;
-            margin-bottom: 50px;
+            margin-bottom: 80px;
             letter-spacing: 3px;
         }
 
@@ -468,9 +468,22 @@
             font-size: 0.7rem;
             cursor: pointer;
             transition: 0.2s;
+            margin-top: 10px;
         }
 
         .close-btn:hover { color: #aaa; }
+
+        .forgot-password {
+            display: block;
+            color: #666;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 10px;
+            text-decoration: underline;
+        }
+
+        .forgot-password:hover { color: #fff; }
 
         /* Сетка товаров */
         .grid {
@@ -601,7 +614,7 @@
             }
 
             .hero-title { font-size: 3rem; }
-            .hero-subtitle { font-size: 1.3rem; }
+            .hero-subtitle { font-size: 1.3rem; margin-bottom: 60px; }
             h2 { font-size: 2rem; }
             
             .main-card { padding: 40px; }
@@ -628,6 +641,7 @@
         <div class="logo" onclick="showPage('home')">NAR-KAEL</div>
         <nav>
             <div class="nav-link active" data-page="home" onclick="showPage('home')">ГЛАВНАЯ</div>
+            <div class="nav-link" data-page="download" onclick="showPage('download')">СКАЧАТЬ</div>
             <div class="nav-link" data-page="library" onclick="showPage('library')">БИБЛИОТЕКА</div>
             <div class="nav-link" data-page="profile" id="profileLink" onclick="showPage('profile')" style="display: none;">ПРОФИЛЬ</div>
             <div class="nav-link" data-page="settings" id="settingsLink" onclick="showPage('settings')" style="display: none;">НАСТРОЙКИ</div>
@@ -643,7 +657,7 @@
     </header>
 
     <div class="pages-wrapper">
-        <!-- HOME PAGE - НОВАЯ ВЕРСИЯ -->
+        <!-- HOME PAGE -->
         <div id="home" class="content active">
             <div class="hero-section">
                 <h1 class="hero-title">EXPEDITION:</h1>
@@ -726,14 +740,15 @@
 
                 <div style="text-align: left; margin-bottom: 30px;">
                     <label style="display: block; margin-bottom: 10px; color: #aaa;">Игровой никнейм:</label>
-                    <input type="text" id="settingsNickname" placeholder="Ваш игровой никнейм">
-                    <button class="auth-submit" onclick="changeNickname()" style="width: 100%; margin-top: 15px;">ИЗМЕНИТЬ НИКНЕЙМ</button>
+                    <input type="text" id="settingsNickname" readonly style="background: #0a0a0a;">
+                    <p style="color: #666; font-size: 0.8rem; margin-top: 8px;">Никнейм нельзя изменить</p>
                 </div>
 
                 <div style="text-align: left; margin-bottom: 30px;">
-                    <label style="display: block; margin-bottom: 10px; color: #aaa;">Новый пароль:</label>
-                    <input type="password" id="newPassword" placeholder="Оставьте пусто, чтобы не менять">
-                    <input type="password" id="confirmPassword" placeholder="Подтвердите пароль">
+                    <label style="display: block; margin-bottom: 10px; color: #aaa;">Изменить пароль:</label>
+                    <input type="password" id="currentPassword" placeholder="Текущий пароль">
+                    <input type="password" id="newPassword" placeholder="Новый пароль (мин. 6 символов)">
+                    <input type="password" id="confirmPassword" placeholder="Подтвердите новый пароль">
                     <button class="auth-submit" onclick="changePassword()" style="width: 100%; margin-top: 15px;">ИЗМЕНИТЬ ПАРОЛЬ</button>
                 </div>
 
@@ -750,12 +765,13 @@
             <h2>ВХОД</h2>
             <div class="error-msg" id="loginError"></div>
             <div class="success-msg" id="loginSuccess"></div>
-            <input type="email" id="loginEmail" placeholder="Email">
+            <input type="text" id="loginEmailOrNickname" placeholder="Email или никнейм">
             <input type="password" id="loginPass" placeholder="Пароль">
             <button class="auth-submit" id="loginSubmit" onclick="login()">
                 <span id="loginButtonText">ВОЙТИ</span>
                 <div class="loader" id="loginLoader"></div>
             </button>
+            <span class="forgot-password" onclick="openModal('resetPasswordModal'); closeModal('loginModal');">Забыли пароль?</span>
             <span class="close-btn" onclick="closeModal('loginModal')">ОТМЕНА</span>
         </div>
     </div>
@@ -777,6 +793,24 @@
         </div>
     </div>
 
+    <!-- MODAL ВОССТАНОВЛЕНИЕ ПАРОЛЯ -->
+    <div id="resetPasswordModal" class="modal">
+        <div class="modal-content">
+            <h2>ВОССТАНОВЛЕНИЕ</h2>
+            <div class="error-msg" id="resetError"></div>
+            <div class="success-msg" id="resetSuccess"></div>
+            <p style="color: #888; margin-bottom: 20px; font-size: 0.9rem;">
+                Введите email, на который зарегистрирован аккаунт. Мы отправим письмо со ссылкой для сброса пароля.
+            </p>
+            <input type="email" id="resetEmail" placeholder="Email">
+            <button class="auth-submit" id="resetSubmit" onclick="resetPassword()">
+                <span id="resetButtonText">ОТПРАВИТЬ ПИСЬМО</span>
+                <div class="loader" id="resetLoader"></div>
+            </button>
+            <span class="close-btn" onclick="closeModal('resetPasswordModal'); openModal('loginModal');">НАЗАД К ВХОДУ</span>
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
@@ -788,7 +822,10 @@
             updatePassword,
             deleteUser,
             setPersistence, 
-            browserLocalPersistence 
+            browserLocalPersistence,
+            sendPasswordResetEmail,
+            EmailAuthProvider,
+            reauthenticateWithCredential
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { 
             getFirestore, 
@@ -851,7 +888,23 @@
             }
         });
 
-        // РЕГИСТРАЦИЯ
+        // Функция поиска email по никнейму
+        async function getEmailByNickname(nickname) {
+            try {
+                const q = query(collection(db, "users"), where("nickname", "==", nickname));
+                const querySnapshot = await getDocs(q);
+                
+                if (!querySnapshot.empty) {
+                    return querySnapshot.docs[0].data().email;
+                }
+                return null;
+            } catch (e) {
+                console.error("Ошибка поиска по никнейму:", e);
+                return null;
+            }
+        }
+
+        // РЕГИСТРАЦИЯ - ИСПРАВЛЕННАЯ ВЕРСИЯ
         window.register = async () => {
             const email = document.getElementById('regEmail').value.trim();
             const nickname = document.getElementById('regNickname').value.trim();
@@ -894,11 +947,20 @@
             loader.classList.add('show');
 
             try {
-                // Создаём аккаунт
+                // СНАЧАЛА проверяем никнейм
+                const nicknameDoc = await getDoc(doc(db, "nicknames", nickname));
+                if (nicknameDoc.exists()) {
+                    showError(errorEl, 'Этот никнейм уже занят');
+                    submitBtn.disabled = false;
+                    loader.classList.remove('show');
+                    return;
+                }
+
+                // ТОЛЬКО ПОТОМ создаём аккаунт
                 const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
                 const user = userCredential.user;
 
-                // Резервируем никнейм (атомарная операция)
+                // Резервируем никнейм
                 await setDoc(doc(db, "nicknames", nickname), {
                     uid: user.uid,
                     createdAt: new Date()
@@ -929,8 +991,6 @@
                     errorMsg = 'Некорректный email';
                 } else if (e.code === 'auth/weak-password') {
                     errorMsg = 'Слишком слабый пароль';
-                } else if (e.code === 'permission-denied') {
-                    errorMsg = 'Этот никнейм уже занят';
                 } else {
                     errorMsg = e.message;
                 }
@@ -941,9 +1001,9 @@
             }
         };
 
-        // ВХОД
+        // ВХОД - С ПОДДЕРЖКОЙ EMAIL И НИКНЕЙМА
         window.login = async () => {
-            const email = document.getElementById('loginEmail').value.trim();
+            const emailOrNickname = document.getElementById('loginEmailOrNickname').value.trim();
             const pass = document.getElementById('loginPass').value;
             const errorEl = document.getElementById('loginError');
             const successEl = document.getElementById('loginSuccess');
@@ -953,8 +1013,8 @@
             errorEl.classList.remove('show');
             successEl.classList.remove('show');
 
-            if (!email || !pass) {
-                showError(errorEl, 'Заполните email и пароль');
+            if (!emailOrNickname || !pass) {
+                showError(errorEl, 'Заполните все поля');
                 return;
             }
 
@@ -962,10 +1022,24 @@
             loader.classList.add('show');
 
             try {
+                let email = emailOrNickname;
+
+                // Если это не email, ищем email по никнейму
+                if (!emailOrNickname.includes('@')) {
+                    const foundEmail = await getEmailByNickname(emailOrNickname);
+                    if (!foundEmail) {
+                        showError(errorEl, 'Пользователь с таким никнеймом не найден');
+                        submitBtn.disabled = false;
+                        loader.classList.remove('show');
+                        return;
+                    }
+                    email = foundEmail;
+                }
+
                 await signInWithEmailAndPassword(auth, email, pass);
                 successEl.textContent = '✓ Добро пожаловать!';
                 successEl.classList.add('show');
-                document.getElementById('loginEmail').value = '';
+                document.getElementById('loginEmailOrNickname').value = '';
                 document.getElementById('loginPass').value = '';
                 setTimeout(() => {
                     closeModal('loginModal');
@@ -973,7 +1047,7 @@
             } catch (e) {
                 let errorMsg = 'Ошибка входа';
                 if (e.code === 'auth/user-not-found' || e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
-                    errorMsg = 'Неверный email или пароль';
+                    errorMsg = 'Неверный логин или пароль';
                 } else if (e.code === 'auth/invalid-email') {
                     errorMsg = 'Некорректный email';
                 } else if (e.code === 'auth/too-many-requests') {
@@ -998,73 +1072,9 @@
             }
         };
 
-        // ИЗМЕНЕНИЕ НИКНЕЙМА
-        window.changeNickname = async () => {
-            const newNickname = document.getElementById('settingsNickname').value.trim();
-            const user = auth.currentUser;
-
-            if (!user) {
-                alert('Вы не авторизованы');
-                return;
-            }
-
-            if (!newNickname) {
-                alert('Введите никнейм');
-                return;
-            }
-
-            if (newNickname.length < 3 || newNickname.length > 20) {
-                alert('Никнейм должен быть от 3 до 20 символов');
-                return;
-            }
-
-            if (!/^[a-zA-Z0-9_-]+$/.test(newNickname)) {
-                alert('Никнейм может содержать только буквы, цифры, _ и -');
-                return;
-            }
-
-            try {
-                // Получаем старый никнейм
-                const userDoc = await getDoc(doc(db, "users", user.uid));
-                if (!userDoc.exists()) {
-                    alert('Данные пользователя не найдены');
-                    return;
-                }
-                
-                const oldNickname = userDoc.data().nickname;
-
-                if (oldNickname === newNickname) {
-                    alert('Это уже ваш текущий никнейм');
-                    return;
-                }
-
-                // Резервируем новый никнейм
-                await setDoc(doc(db, "nicknames", newNickname), {
-                    uid: user.uid,
-                    createdAt: new Date()
-                });
-
-                // Обновляем никнейм пользователя
-                await updateDoc(doc(db, "users", user.uid), {
-                    nickname: newNickname
-                });
-
-                // Удаляем старый никнейм из резерва
-                await deleteDoc(doc(db, "nicknames", oldNickname));
-
-                alert('✓ Никнейм успешно изменён');
-                document.getElementById('profileNickname').textContent = newNickname;
-            } catch (e) {
-                if (e.code === 'permission-denied') {
-                    alert('Этот никнейм уже занят');
-                } else {
-                    alert('Ошибка: ' + e.message);
-                }
-            }
-        };
-
-        // ИЗМЕНЕНИЕ ПАРОЛЯ
+        // ИЗМЕНЕНИЕ ПАРОЛЯ - С ПРОВЕРКОЙ ТЕКУЩЕГО ПАРОЛЯ
         window.changePassword = async () => {
+            const currentPass = document.getElementById('currentPassword').value;
             const newPass = document.getElementById('newPassword').value;
             const confirmPass = document.getElementById('confirmPassword').value;
             const user = auth.currentUser;
@@ -1074,32 +1084,98 @@
                 return;
             }
 
-            if (!newPass || !confirmPass) {
-                alert('Заполните оба поля');
+            if (!currentPass || !newPass || !confirmPass) {
+                alert('Заполните все поля');
                 return;
             }
 
             if (newPass !== confirmPass) {
-                alert('Пароли не совпадают');
+                alert('Новые пароли не совпадают');
                 return;
             }
 
             if (newPass.length < 6) {
-                alert('Пароль должен быть не менее 6 символов');
+                alert('Новый пароль должен быть не менее 6 символов');
+                return;
+            }
+
+            if (currentPass === newPass) {
+                alert('Новый пароль совпадает со старым');
                 return;
             }
 
             try {
+                // Реаутентификация пользователя
+                const credential = EmailAuthProvider.credential(user.email, currentPass);
+                await reauthenticateWithCredential(user, credential);
+
+                // Обновление пароля
                 await updatePassword(user, newPass);
+                
                 alert('✓ Пароль успешно изменён');
+                document.getElementById('currentPassword').value = '';
                 document.getElementById('newPassword').value = '';
                 document.getElementById('confirmPassword').value = '';
             } catch (e) {
-                if (e.code === 'auth/requires-recent-login') {
-                    alert('Для изменения пароля необходимо повторно войти в аккаунт');
+                if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
+                    alert('Неверный текущий пароль');
+                } else if (e.code === 'auth/too-many-requests') {
+                    alert('Слишком много попыток. Попробуйте позже');
                 } else {
                     alert('Ошибка: ' + e.message);
                 }
+            }
+        };
+
+        // ВОССТАНОВЛЕНИЕ ПАРОЛЯ
+        window.resetPassword = async () => {
+            const email = document.getElementById('resetEmail').value.trim();
+            const errorEl = document.getElementById('resetError');
+            const successEl = document.getElementById('resetSuccess');
+            const submitBtn = document.getElementById('resetSubmit');
+            const loader = document.getElementById('resetLoader');
+
+            errorEl.classList.remove('show');
+            successEl.classList.remove('show');
+
+            if (!email) {
+                showError(errorEl, 'Введите email');
+                return;
+            }
+
+            if (!email.includes('@')) {
+                showError(errorEl, 'Введите корректный email');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            loader.classList.add('show');
+
+            try {
+                await sendPasswordResetEmail(auth, email);
+                successEl.textContent = '✓ Письмо отправлено! Проверьте почту.';
+                successEl.classList.add('show');
+                document.getElementById('resetEmail').value = '';
+                
+                setTimeout(() => {
+                    closeModal('resetPasswordModal');
+                    openModal('loginModal');
+                }, 3000);
+            } catch (e) {
+                let errorMsg = 'Ошибка отправки письма';
+                if (e.code === 'auth/user-not-found') {
+                    errorMsg = 'Пользователь с таким email не найден';
+                } else if (e.code === 'auth/invalid-email') {
+                    errorMsg = 'Некорректный email';
+                } else if (e.code === 'auth/too-many-requests') {
+                    errorMsg = 'Слишком много запросов. Попробуйте позже';
+                } else {
+                    errorMsg = e.message;
+                }
+                showError(errorEl, errorMsg);
+            } finally {
+                submitBtn.disabled = false;
+                loader.classList.remove('show');
             }
         };
 
@@ -1155,10 +1231,15 @@
 
         function closeModal(id) {
             document.getElementById(id).classList.remove('active');
-            const errorEl = document.getElementById(id === 'loginModal' ? 'loginError' : 'regError');
-            const successEl = document.getElementById(id === 'loginModal' ? 'loginSuccess' : 'regSuccess');
-            if (errorEl) errorEl.classList.remove('show');
-            if (successEl) successEl.classList.remove('show');
+            
+            // Очистка ошибок и успехов
+            const modals = ['login', 'reg', 'reset'];
+            modals.forEach(modal => {
+                const errorEl = document.getElementById(modal + 'Error');
+                const successEl = document.getElementById(modal + 'Success');
+                if (errorEl) errorEl.classList.remove('show');
+                if (successEl) successEl.classList.remove('show');
+            });
         }
 
         function showPage(page) {
@@ -1217,6 +1298,10 @@
 
             document.getElementById('regPassConfirm').addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') window.register();
+            });
+
+            document.getElementById('resetEmail').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') window.resetPassword();
             });
         });
     </script>
