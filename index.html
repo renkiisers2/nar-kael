@@ -5,8 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NAR-KAEL | THE VOID</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Google reCAPTCHA -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- Firebase App Check для защиты от ботов -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app-check.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD9gVWWwnrPg6GNN1Q6I-J6cBeOu-iMee0",
+            authDomain: "nar-kael.firebaseapp.com",
+            projectId: "nar-kael",
+            storageBucket: "nar-kael.firebasestorage.app",
+            messagingSenderId: "716148546557",
+            appId: "1:716148546557:web:1c8ab4d9758c4b0cded794",
+            measurementId: "G-1DJ3MBEFHV"
+        };
+
+        const app = initializeApp(firebaseConfig);
+
+        // Инициализация App Check с reCAPTCHA v3
+        const appCheck = initializeAppCheck(app, {
+            provider: new ReCaptchaV3Provider('6LedcGssAAAAAA2B4XXhLwcDcFfvblpt1D5etShb'),
+            isTokenAutoRefreshEnabled: true
+        });
+    </script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -697,13 +718,6 @@
 
         .forgot-password:hover { color: #fff; }
 
-        /* reCAPTCHA стили */
-        .g-recaptcha {
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: center;
-        }
-
         /* Таблица истории */
         .history-table {
             width: 100%;
@@ -1124,8 +1138,6 @@
                     </svg>
                 </span>
             </div>
-            <!-- Google reCAPTCHA -->
-            <div class="g-recaptcha" data-sitekey="6LedcGssAAAAAFhc7vcN9A0IRiWznEUxqk_DmmSr"></div>
             <button class="auth-submit" id="regSubmit" onclick="register()">
                 <span id="regButtonText">СОЗДАТЬ АККАУНТ</span>
                 <div class="loader" id="regLoader"></div>
@@ -1293,13 +1305,6 @@
                 return;
             }
 
-            // Проверка reCAPTCHA
-            const recaptchaResponse = grecaptcha.getResponse();
-            if (!recaptchaResponse) {
-                showError(errorEl, 'Пожалуйста, подтвердите что вы не робот');
-                return;
-            }
-
             if (nickname.length < 3 || nickname.length > 20) {
                 showError(errorEl, 'Никнейм должен быть от 3 до 20 символов');
                 return;
@@ -1329,7 +1334,6 @@
                     showError(errorEl, 'Этот никнейм уже занят');
                     submitBtn.disabled = false;
                     loader.classList.remove('show');
-                    grecaptcha.reset();
                     return;
                 }
 
@@ -1358,7 +1362,6 @@
                 setTimeout(() => {
                     closeModal('regModal');
                     showNotification('Добро пожаловать!', 'Ваш аккаунт успешно создан', 'success');
-                    grecaptcha.reset();
                 }, 1500);
             } catch (e) {
                 let errorMsg = 'Ошибка регистрации';
@@ -1370,7 +1373,6 @@
                     errorMsg = 'Слишком слабый пароль';
                 }
                 showError(errorEl, errorMsg);
-                grecaptcha.reset();
             } finally {
                 submitBtn.disabled = false;
                 loader.classList.remove('show');
